@@ -1,4 +1,41 @@
-<button class="button" type="button" (click)="addEnergyStore()">Add EnergyStore</button>
+<div class="add">
+  <button class="material-icons icon-button" type="button" (click)="openPopup()">add</button>
+</div>
+
+<div class="overlay" [ngStyle]="{'display': popupActive == true ? 'flex' : 'none'}">
+  <div class="popup">
+    <h2>Speicher hinzuf&uuml;gen</h2>
+    <p>This is a simple popup in the middle of the screen.</p>
+    <form [formGroup]="storeForm">
+      <label for="location">Standort: </label>
+      <input id="location" type="text" formControlName="location">
+
+      <br>
+
+      <label for="max-capacity">Maximale Kapazität: </label>
+      <input id="max-capacity" type="number" formControlName="maxCapacity">
+
+      <br>
+
+      <label for="current-capacity">Aktuelle Kapazität: </label>
+      <input id="current-capacity" type="number" formControlName="currentCapacity">
+
+      <br>
+
+      <label for="type">Typ: </label>
+      <select formControlName="type">
+        <option *ngFor="let type of types" [ngValue]="type">
+          {{type.display}}
+        </option>
+      </select>
+    </form>
+    <div class="actions">
+      <button class="button" (click)="closePopup()">Abbrechen</button>
+      <button class="button" (click)="addEnergyStore()" [disabled]="!storeForm.valid">Speichern</button>
+    </div>
+  </div>
+</div>
+
 <table>
   <thead>
     <tr>

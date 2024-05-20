@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Network, Overview, OverviewService } from './overview.service';
 import { EnergyStoresComponent } from '../energy-stores/energy-stores.component';
-import { EnergyStore } from '../energy-stores/energy-stores.service';
+import { EnergyStore, NewEnergyStore } from '../energy-stores/energy-stores.service';
 
 @Component({
   selector: 'app-overview',
@@ -27,7 +27,7 @@ export class OverviewComponent implements OnInit {
       .subscribe((overview) => (this.overview = overview));
   }
 
-  updateNewStore(store: EnergyStore): void {
+  updateNewStore(store: NewEnergyStore): void {
     this.overview!.maxCapacity += store.maxCapacity;
     this.overview!.currentCapacity += store.currentCapacity;
     this.overview!.percentageCapacity =

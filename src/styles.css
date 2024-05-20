@@ -35,7 +35,13 @@ html {
   background: black;
   border-radius: 8px;
   padding: 0.7rem;
-  border: none;
+  border: 1px solid transparent;
+}
+
+.button:disabled {
+  color: black;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .icon-button {

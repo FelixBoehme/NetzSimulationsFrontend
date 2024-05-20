@@ -10,6 +10,13 @@ export interface EnergyStore {
   location: String;
 }
 
+export interface NewEnergyStore {
+  type: String;
+  maxCapacity: number;
+  currentCapacity: number;
+  location: String;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,10 +26,10 @@ export class EnergyStoresService {
   constructor(private http: HttpClient) {}
 
   getEnergyStores() {
-    return this.http.get<EnergyStore[]>(this.energyStoreURL + 'active');
+    return this.http.get<EnergyStore[]>(environment.apiUrl + 'network/1/stores');
   }
 
-  addEnergyStore(energyStore: EnergyStore) {
+  addEnergyStore(energyStore: NewEnergyStore) {
     return this.http.post<EnergyStore>(
       this.energyStoreURL + 'network/1',
       energyStore,
