@@ -1,10 +1,11 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OverviewComponent } from './overview/overview.component';
+import { HttpClientModule } from '@angular/common/http';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -31,7 +32,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService]
-    }
+    },
+    importProvidersFrom(HttpClientModule),
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,25 @@
+<button class="button" type="button" (click)="addEnergyStore()">Add EnergyStore</button>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Standort</th>
+      <th scope="col">aktuelle Kapazität</th>
+      <th scope="col">maximale Kapazität</th>
+      <th scope="col">Typ</th>
+      <th scope="col">Entfernen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let store of energyStores">
+      <th scope="row">{{store.location}}</th>
+      <td>{{store.maxCapacity}}</td>
+      <td>{{store.currentCapacity}}</td>
+      <td>{{store.type}}</td>
+      <td>
+        <button class="material-icons icon-button" (click)="deleteStoreFromNetwork(store)">
+          close
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

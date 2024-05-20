@@ -1,1 +1,13 @@
-<p>overview works!</p>
+<button class="button" type="button" (click)="addNetwork('Stadtwerke')">Add Network</button>
+<div *ngIf="overview">
+  <span>Aktuelle Kapazität: {{overview.currentCapacity}}</span> <br>
+  <span>Maximale Kapazität: {{overview.maxCapacity}}</span> <br>
+
+  <div class="progressbar">
+    <div [ngStyle]="{'width.%': overview.percentageCapacity*100}">{{ (overview.percentageCapacity * 100 ).toFixed(2) }}%</div>
+  </div>
+
+  <br>
+
+  <app-energy-stores (newStore)="updateNewStore($event)" (removedStore)="updateRemovedStore($event)"></app-energy-stores>
+</div>

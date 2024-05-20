@@ -1,0 +1,11 @@
+.logout {
+  float: right;
+  padding: 1.5rem;
+}
+
+.overview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

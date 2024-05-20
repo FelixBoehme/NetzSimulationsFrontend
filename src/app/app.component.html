@@ -1,7 +1,10 @@
-<h1>Keycloak Angular Example</h1>
+<div class="logout">
+  <button class="button" *ngIf="isLoggedIn" type="button" (click)="logout()">Logout</button>
+</div>
 
-<button *ngIf="isLoggedIn" type="button" (click)="logout()">Log out</button>
-
-<section>
-  <app-overview></app-overview>
-</section>
+<div class="overview">
+  <h1>Netzsimulation</h1>
+  <section>
+    <app-overview></app-overview>
+  </section>
+</div>
