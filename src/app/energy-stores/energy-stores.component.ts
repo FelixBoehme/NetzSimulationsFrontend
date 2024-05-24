@@ -9,8 +9,6 @@ import {
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
-  FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
@@ -92,7 +90,6 @@ export class EnergyStoresComponent implements OnInit {
       .subscribe((energyStores) => (this.energyStores = energyStores));
   }
 
-  //TODO: update overview after creating new energyStore
   addEnergyStore(): void {
     const newEnergyStore = {
       type: this.storeForm.get('type')?.value?.name,
@@ -124,5 +121,7 @@ export class EnergyStoresComponent implements OnInit {
 
   closePopup(): void {
     this.popupActive = false;
+
+    this.storeForm.reset();
   }
 }

@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OverviewComponent } from './overview/overview.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -25,7 +26,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, OverviewComponent, AppRoutingModule, KeycloakAngularModule],
+  imports: [BrowserModule, SidebarComponent, OverviewComponent, AppRoutingModule, KeycloakAngularModule],
   providers: [
     {
       provide: APP_INITIALIZER,

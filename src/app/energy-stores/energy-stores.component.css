@@ -2,6 +2,7 @@
   display: flex;
   justify-content: right;
   align-items: right;
+  gap: 1rem;
 }
 
 .overlay {
@@ -29,8 +30,48 @@
 }
 
 .actions {
+  padding-top: 2rem;
   display: flex;
   justify-content: right;
   align-items: end;
   gap: 1rem;
+}
+
+.table-actions {
+  display: flex;
+  gap: 4px;
+}
+
+/* align form */
+form {
+  display: table;
+}
+
+p {
+  display: table-row;
+}
+
+label {
+  font-weight: 450;
+  font-size: 1.05rem;
+  display: table-cell;
+  text-align: left;
+  padding-right: 4rem;
+  padding-bottom: 2rem;
+}
+
+input {
+  display: table-cell;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  height: 1.75rem;
+}
+
+select {
+  display: table-cell;
+  width: 100%;
+  background: transparent;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  height: 1.75rem;
 }

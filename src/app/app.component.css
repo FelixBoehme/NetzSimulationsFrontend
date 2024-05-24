@@ -3,9 +3,25 @@
   padding: 1.5rem;
 }
 
+.menu {
+  padding: 1.5rem;
+  cursor: pointer;
+}
+
 .overview {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: black;
+  padding: 15px;
+  display: flex;
   align-items: center;
 }

@@ -2,7 +2,12 @@
   <button class="button" *ngIf="isLoggedIn" type="button" (click)="logout()">Logout</button>
 </div>
 
+<div class="menu">
+  <span class="material-icons" (click)="sidebar.toggleSidebar()">menu</span>
+</div>
+
 <div class="overview">
+  <app-sidebar #sidebar></app-sidebar>
   <h1>Netzsimulation</h1>
   <section>
     <app-overview></app-overview>

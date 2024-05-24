@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 html {
   font-family: Inter;
 }
@@ -51,3 +56,4 @@ html {
   padding: 0.25rem;
   border: none;
 }
+

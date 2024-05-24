@@ -1,0 +1,21 @@
+<div class="sidebar" [class.active]="sidebarOpen">
+  <button class="material-icons close" (click)="toggleSidebar()">close</button>
+  <ul>
+    <li>
+      <a href="/">
+        <div class="entry">
+          <span class="material-icons">home</span>
+          <span>&Uuml;bersicht</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="/stores">
+        <div class="entry">
+          <span class="material-icons">battery_full</span>
+          <span>Speicher</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

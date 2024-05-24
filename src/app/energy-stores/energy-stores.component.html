@@ -2,32 +2,33 @@
   <button class="material-icons icon-button" type="button" (click)="openPopup()">add</button>
 </div>
 
+<!-- TODO: -->
+<!-- close on escape press -->
+<!-- save on enter press if input is valid -->
 <div class="overlay" [ngStyle]="{'display': popupActive == true ? 'flex' : 'none'}">
   <div class="popup">
     <h2>Speicher hinzuf&uuml;gen</h2>
-    <p>This is a simple popup in the middle of the screen.</p>
     <form [formGroup]="storeForm">
-      <label for="location">Standort: </label>
-      <input id="location" type="text" formControlName="location">
-
-      <br>
-
-      <label for="max-capacity">Maximale Kapazität: </label>
-      <input id="max-capacity" type="number" formControlName="maxCapacity">
-
-      <br>
-
-      <label for="current-capacity">Aktuelle Kapazität: </label>
-      <input id="current-capacity" type="number" formControlName="currentCapacity">
-
-      <br>
-
-      <label for="type">Typ: </label>
-      <select formControlName="type">
-        <option *ngFor="let type of types" [ngValue]="type">
+      <p>
+        <label for="location">Standort: </label>
+        <input id="location" type="text" formControlName="location">
+      </p>
+      <p>
+        <label for="max-capacity">Maximale Kapazität: </label>
+        <input id="max-capacity" type="number" formControlName="maxCapacity">
+      </p>
+      <p>
+        <label for="current-capacity">Aktuelle Kapazität: </label>
+        <input id="current-capacity" type="number" formControlName="currentCapacity">
+      </p>
+      <p>
+        <label for="type">Typ: </label>
+        <select formControlName="type">
+          <option *ngFor="let type of types" [ngValue]="type">
           {{type.display}}
-        </option>
-      </select>
+          </option>
+        </select>
+      </p>
     </form>
     <div class="actions">
       <button class="button" (click)="closePopup()">Abbrechen</button>

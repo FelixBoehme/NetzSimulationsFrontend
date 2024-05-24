@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 export interface EnergyStore {
-  id: number,
+  id: number;
   type: 'SOLAR' | 'WIND' | 'CONVENTIONAL';
   maxCapacity: number;
   currentCapacity: number;
@@ -26,7 +26,9 @@ export class EnergyStoresService {
   constructor(private http: HttpClient) {}
 
   getEnergyStores() {
-    return this.http.get<EnergyStore[]>(environment.apiUrl + 'network/1/stores');
+    return this.http.get<EnergyStore[]>(
+      environment.apiUrl + 'network/1/stores',
+    );
   }
 
   addEnergyStore(energyStore: NewEnergyStore) {
@@ -37,6 +39,6 @@ export class EnergyStoresService {
   }
 
   deleteStoreFromNetwork(storeNmb: number) {
-    return this.http.delete(this.energyStoreURL + storeNmb + "/network")
+    return this.http.delete(this.energyStoreURL + storeNmb + '/network');
   }
 }
