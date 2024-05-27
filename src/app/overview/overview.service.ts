@@ -18,15 +18,19 @@ export interface Network {
   providedIn: 'root',
 })
 export class OverviewService {
-  overviewUrl = environment.apiUrl + 'network/1/capacity';
+  url = environment.apiUrl + 'network/1/capacity';
 
   constructor(private http: HttpClient) {}
 
   getOverview() {
-    return this.http.get<Overview>(this.overviewUrl);
+    return this.http.get<Overview>(this.url);
   }
 
   addNetwork(network: Network) {
     return this.http.post<Network>(environment.apiUrl + 'network', network);
+  }
+
+  drawCapacity(amount: number) {
+    return this.http.put<number>(this.url + '/' + amount, null);
   }
 }

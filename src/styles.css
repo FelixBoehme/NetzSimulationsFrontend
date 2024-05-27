@@ -57,3 +57,72 @@ html {
   border: none;
 }
 
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.popup h2 {
+    margin-top: 0;
+}
+
+.actions {
+  padding-top: 2rem;
+  display: flex;
+  justify-content: right;
+  align-items: end;
+  gap: 1rem;
+}
+
+/* align form */
+.popup h2 {
+  padding-bottom: 2rem;
+}
+
+.popup form {
+  display: table;
+}
+
+.popup p {
+  display: table-row;
+}
+
+.popup label {
+  font-weight: 450;
+  font-size: 1.05rem;
+  display: table-cell;
+  text-align: left;
+  padding-right: 4rem;
+  padding-bottom: 2rem;
+}
+
+.popup input {
+  display: table-cell;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  height: 1.75rem;
+}
+
+.popup select {
+  display: table-cell;
+  width: 100%;
+  background: transparent;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  height: 1.75rem;
+}
