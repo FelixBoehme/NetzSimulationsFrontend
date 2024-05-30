@@ -14,28 +14,34 @@ function initializeKeycloak(keycloak: KeycloakService) {
       config: {
         realm: 'NetzSimulation',
         url: 'http://localhost:8081',
-        clientId: 'login'
+        clientId: 'login',
       },
       initOptions: {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html'
-      }
+          window.location.origin + '/assets/silent-check-sso.html',
+      },
     });
 }
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, SidebarComponent, OverviewComponent, AppRoutingModule, KeycloakAngularModule],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    SidebarComponent,
+    OverviewComponent,
+    KeycloakAngularModule,
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
-      deps: [KeycloakService]
+      deps: [KeycloakService],
     },
     importProvidersFrom(HttpClientModule),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,7 +1,14 @@
+.overview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .progressbar {
   background-color: black;
-  border-radius: 8px;
-  padding: 5px;
+  border-radius: 14px;
+  padding: 6px;
 }
 
 .progressbar > div {

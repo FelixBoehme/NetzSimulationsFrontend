@@ -8,13 +8,6 @@
   cursor: pointer;
 }
 
-.overview {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .sidebar {
   position: fixed;
   top: 0;

@@ -3,13 +3,10 @@
 </div>
 
 <div class="menu">
-  <span class="material-icons" (click)="sidebar.toggleSidebar()">menu</span>
+  <span class="material-symbols-rounded" (click)="sidebar.toggleSidebar()">menu</span>
 </div>
 
-<div class="overview">
+<div>
   <app-sidebar #sidebar></app-sidebar>
-  <h1>Netzsimulation</h1>
-  <section>
-    <app-overview></app-overview>
-  </section>
+  <router-outlet></router-outlet>
 </div>

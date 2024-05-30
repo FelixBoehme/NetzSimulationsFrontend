@@ -2,10 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Network, Overview, OverviewService } from './overview.service';
 import { EnergyStoresComponent } from '../energy-stores/energy-stores.component';
-import {
-  EnergyStore,
-  NewEnergyStore,
-} from '../energy-stores/energy-stores.service';
+import { NewEnergyStore } from '../energy-stores/energy-stores.service';
+import { EnergyStore } from '../energy-store';
 import {
   AbstractControl,
   FormBuilder,
@@ -82,6 +80,7 @@ export class OverviewComponent implements OnInit {
       .subscribe((overview) => (this.overview = overview));
   }
 
+  //TODO: decide if it's better to just call getOverview() instead
   updateNewStore(store: NewEnergyStore): void {
     this.overview!.maxCapacity += store.maxCapacity;
     this.overview!.currentCapacity += store.currentCapacity;
@@ -104,6 +103,13 @@ export class OverviewComponent implements OnInit {
     }
   }
 
+  increasedCapacity(amount: number): void {
+    this.overview!.currentCapacity += amount;
+
+    this.overview!.percentageCapacity =
+      this.overview!.currentCapacity / this.overview!.maxCapacity;
+  }
+
   addNetwork(name: string): void {
     const newNetwork = { name } as Network;
     this.overviewService.addNetwork(newNetwork).subscribe();
@@ -120,8 +126,7 @@ export class OverviewComponent implements OnInit {
       this.storeComponent.getEnergyStores();
     });
 
-
-    this.drawForm.reset();
+    this.drawForm.reset(); //TODO: reset to default values
     this.closePopup();
   }
 

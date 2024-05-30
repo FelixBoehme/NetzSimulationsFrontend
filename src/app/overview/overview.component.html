@@ -1,33 +1,37 @@
-<button class="button" type="button" (click)="addNetwork('Stadtwerke')">Add Network</button>
-<div *ngIf="overview">
-  <span>Aktuelle Kapazität: {{overview.currentCapacity}}</span> <br>
-  <span>Maximale Kapazität: {{overview.maxCapacity}}</span> <br>
+<div class="overview">
+  <h1>Netzsimulation</h1>
 
-  <div class="progressbar">
-    <div [ngStyle]="{'width.%': overview.percentageCapacity*100}">{{ (overview.percentageCapacity * 100 ).toFixed(2) }}%</div>
-  </div>
+  <button class="button" type="button" (click)="addNetwork('Stadtwerke')">Add Network</button>
+  <div *ngIf="overview">
+    <span>Aktuelle Kapazität: {{overview.currentCapacity}}</span> <br>
+    <span>Maximale Kapazität: {{overview.maxCapacity}}</span> <br>
 
-  <br>
+    <div class="progressbar">
+      <div [ngStyle]="{'width.%': overview.percentageCapacity*100}">{{ (overview.percentageCapacity * 100 ).toFixed(2) }}%</div>
+    </div>
 
-  <!-- TODO: show form and draw capacity on submit -->
-  <button class="button" (click)="openPopup()">Energie abrufen</button>
-  <div class="overlay" [ngStyle]="{'display': popupActive == true ? 'flex' : 'none'}">
-    <div class="popup">
-      <h2>Energie aus Netz abrufen</h2>
-      <form [formGroup]="drawForm">
-        <p>
+    <br>
+
+    <!-- TODO: show form and draw capacity on submit -->
+    <button class="button" (click)="openPopup()">Energie abrufen</button>
+    <div class="overlay" [ngStyle]="{'display': popupActive == true ? 'flex' : 'none'}">
+      <div class="popup">
+        <h2>Energie aus Netz abrufen</h2>
+        <form [formGroup]="drawForm">
+          <p>
           <label for="amount">Betrag: </label>
           <input id="amount" type="number" formControlName="amount">
-        </p>
-      </form>
-      <div class="actions">
-        <button class="button" (click)="closePopup()">Abbrechen</button>
-        <button class="button" (click)="drawCapacity()" [disabled]="!drawForm.valid">Speichern</button>
+          </p>
+        </form>
+        <div class="actions">
+          <button class="button" (click)="closePopup()">Abbrechen</button>
+          <button class="button" (click)="drawCapacity()" [disabled]="!drawForm.valid">Speichern</button>
+        </div>
       </div>
     </div>
+
+    <br>
+
+    <app-energy-stores (newStore)="updateNewStore($event)" (removedStore)="updateRemovedStore($event)" (increasedCapacity)="increasedCapacity($event)"></app-energy-stores>
   </div>
-
-  <br>
-
-  <app-energy-stores (newStore)="updateNewStore($event)" (removedStore)="updateRemovedStore($event)"></app-energy-stores>
 </div>

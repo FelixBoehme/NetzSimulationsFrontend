@@ -1,18 +1,18 @@
 <div class="sidebar" [class.active]="sidebarOpen">
-  <button class="material-icons close" (click)="toggleSidebar()">close</button>
+  <button class="material-symbols-rounded close" (click)="toggleSidebar()">close</button>
   <ul>
     <li>
-      <a href="/">
+      <a routerLink="/" (click)="toggleSidebar()">
         <div class="entry">
-          <span class="material-icons">home</span>
+          <span class="material-symbols-rounded" routerLinkActive="material-symbols-rounded-filled" [routerLinkActiveOptions]="{exact: true}">home</span>
           <span>&Uuml;bersicht</span>
         </div>
       </a>
     </li>
     <li>
-      <a href="/stores">
+      <a routerLink="/stores" (click)="toggleSidebar()">
         <div class="entry">
-          <span class="material-icons">battery_full</span>
+          <span class="material-symbols-rounded" routerLinkActive="material-symbols-rounded-filled">bolt</span>
           <span>Speicher</span>
         </div>
       </a>
