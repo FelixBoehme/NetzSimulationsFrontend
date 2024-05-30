@@ -1,11 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { OverviewService } from '../overview/overview.service';
-import {
-  EnergyStore,
-  EnergyStoresService,
-  NewEnergyStore,
-} from './energy-stores.service';
+import { EnergyStoresService, NewEnergyStore } from './energy-stores.service';
+import { EnergyStore } from '../energy-store';
 import {
   AbstractControl,
   FormBuilder,
@@ -26,6 +23,7 @@ import {
 export class EnergyStoresComponent implements OnInit {
   @Output() newStore = new EventEmitter<NewEnergyStore>();
   @Output() removedStore = new EventEmitter<EnergyStore>();
+  @Output() increasedCapacity = new EventEmitter<number>();
 
   constructor(
     private energyStoreService: EnergyStoresService,
@@ -33,7 +31,8 @@ export class EnergyStoresComponent implements OnInit {
   ) {}
 
   energyStores: EnergyStore[] = [];
-  popupActive: Boolean = false;
+  addPopupActive: Boolean = false;
+  increasePopupActive: Boolean = false;
 
   types: { name: String; display: String }[] = [
     { name: 'SOLAR', display: 'Solar' },
@@ -80,6 +79,30 @@ export class EnergyStoresComponent implements OnInit {
     },
   );
 
+  private capacityValidator(store: EnergyStore | null): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const amount = formGroup.get('amount')?.value;
+
+      if (!store || amount == null) {
+        return null;
+      }
+
+      const availableCapacity = store.maxCapacity - store.currentCapacity;
+
+      return availableCapacity >= amount ? null : { capacityExceeded: true };
+    };
+  }
+
+  increaseStore: EnergyStore | null = null;
+  increaseForm = this.formBuilder.group(
+    {
+      amount: [0, Validators.min(1)],
+    },
+    {
+      validators: this.capacityValidator(this.increaseStore),
+    },
+  );
+
   ngOnInit(): void {
     this.getEnergyStores();
   }
@@ -104,7 +127,7 @@ export class EnergyStoresComponent implements OnInit {
 
     this.newStore.emit(newEnergyStore);
 
-    this.closePopup();
+    this.closeAddPopup();
   }
 
   deleteStoreFromNetwork(store: EnergyStore): void {
@@ -115,13 +138,39 @@ export class EnergyStoresComponent implements OnInit {
     this.removedStore.emit(store);
   }
 
-  openPopup(): void {
-    this.popupActive = true;
+  increaseCapacity(): void {
+    this.energyStoreService
+      .increaseCapacity(
+        this.increaseStore!.id,
+        this.increaseForm.get('amount')?.value!,
+      )
+      .subscribe(() => this.getEnergyStores());
+
+    this.increasedCapacity.emit(this.increaseForm.get('amount')?.value!);
+    this.closeIncreasePopup();
   }
 
-  closePopup(): void {
-    this.popupActive = false;
+  openAddPopup(): void {
+    this.addPopupActive = true;
+  }
 
-    this.storeForm.reset();
+  closeAddPopup(): void {
+    this.addPopupActive = false;
+
+    this.storeForm.reset(); //TODO: reset to default values
+  }
+
+  openIncreasePopup(store: EnergyStore): void {
+    this.increaseStore = store;
+    this.increaseForm.setValidators(this.capacityValidator(store));
+
+    this.increasePopupActive = true;
+  }
+
+  closeIncreasePopup(): void {
+    this.increasePopupActive = false;
+
+    this.increaseStore = null;
+    this.increaseForm.reset(); //TODO: reset to default values
   }
 }

@@ -1,11 +1,11 @@
 <div class="add">
-  <button class="material-icons icon-button" type="button" (click)="openPopup()">add</button>
+  <button class="material-symbols-rounded icon-button" type="button" (click)="openAddPopup()">add</button>
 </div>
 
 <!-- TODO: -->
 <!-- close on escape press -->
 <!-- save on enter press if input is valid -->
-<div class="overlay" [ngStyle]="{'display': popupActive == true ? 'flex' : 'none'}">
+<div class="overlay" [ngStyle]="{'display': addPopupActive == true ? 'flex' : 'none'}">
   <div class="popup">
     <h2>Speicher hinzuf&uuml;gen</h2>
     <form [formGroup]="storeForm">
@@ -31,7 +31,7 @@
       </p>
     </form>
     <div class="actions">
-      <button class="button" (click)="closePopup()">Abbrechen</button>
+      <button class="button" (click)="closeAddPopup()">Abbrechen</button>
       <button class="button" (click)="addEnergyStore()" [disabled]="!storeForm.valid">Speichern</button>
     </div>
   </div>
@@ -44,20 +44,41 @@
       <th scope="col">aktuelle Kapazität</th>
       <th scope="col">maximale Kapazität</th>
       <th scope="col">Typ</th>
-      <th scope="col">Entfernen</th>
+      <th scope="col">Aktionen</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let store of energyStores">
       <th scope="row">{{store.location}}</th>
-      <td>{{store.maxCapacity}}</td>
       <td>{{store.currentCapacity}}</td>
+      <td>{{store.maxCapacity}}</td>
       <td>{{store.type}}</td>
       <td>
-        <button class="material-icons icon-button" (click)="deleteStoreFromNetwork(store)">
-          close
-        </button>
+        <div class="table-actions">
+          <button class="material-symbols-rounded icon-button" (click)="deleteStoreFromNetwork(store)">
+            close
+          </button>
+          <button class="material-symbols-rounded icon-button" (click)="openIncreasePopup(store)" [disabled]="store.currentCapacity === store.maxCapacity">
+            arrow_upward
+          </button>
+        </div>
       </td>
     </tr>
   </tbody>
 </table>
+
+<div class="overlay" [ngStyle]="{'display': increasePopupActive == true ? 'flex' : 'none'}">
+  <div class="popup">
+    <h2>Speicher aufladen</h2>
+    <form [formGroup]="increaseForm">
+      <p>
+        <label for="amount">Betrag: </label>
+        <input id="amount" type="number" formControlName="amount">
+      </p>
+    </form>
+    <div class="actions">
+      <button class="button" (click)="closeIncreasePopup()">Abbrechen</button>
+      <button class="button" (click)="increaseCapacity()" [disabled]="!increaseForm.valid">Speichern</button>
+    </div>
+  </div>
+</div>

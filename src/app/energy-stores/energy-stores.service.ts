@@ -1,14 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-
-export interface EnergyStore {
-  id: number;
-  type: 'SOLAR' | 'WIND' | 'CONVENTIONAL';
-  maxCapacity: number;
-  currentCapacity: number;
-  location: String;
-}
+import { EnergyStore } from '../energy-store';
 
 export interface NewEnergyStore {
   type: String;
@@ -38,7 +31,14 @@ export class EnergyStoresService {
     );
   }
 
-  deleteStoreFromNetwork(storeNmb: number) {
-    return this.http.delete(this.energyStoreURL + storeNmb + '/network');
+  deleteStoreFromNetwork(storeId: number) {
+    return this.http.delete(this.energyStoreURL + storeId + '/network');
+  }
+
+  increaseCapacity(storeId: number, amount: number) {
+    return this.http.put(
+      this.energyStoreURL + storeId + '/capacity/' + amount,
+      null,
+    );
   }
 }
