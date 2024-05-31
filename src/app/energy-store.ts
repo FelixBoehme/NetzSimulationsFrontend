@@ -6,3 +6,10 @@ export interface EnergyStore {
   location: String;
 }
 
+export interface NewEnergyStore {
+  type: String;
+  maxCapacity: number;
+  currentCapacity: number;
+  location: String;
+}
+

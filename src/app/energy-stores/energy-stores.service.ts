@@ -2,17 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { EnergyStore } from '../energy-store';
-
-export interface NewEnergyStore {
-  type: String;
-  maxCapacity: number;
-  currentCapacity: number;
-  location: String;
-}
+import { NewEnergyStore } from '../energy-store';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class EnergyStoresService {
   energyStoreURL = environment.apiUrl + 'energyStore/';
 

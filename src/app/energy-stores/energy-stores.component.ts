@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { OverviewService } from '../overview/overview.service';
-import { EnergyStoresService, NewEnergyStore } from './energy-stores.service';
+import { EnergyStoresService } from './energy-stores.service';
+import { NewEnergyStore } from '../energy-store';
 import { EnergyStore } from '../energy-store';
 import {
   AbstractControl,
@@ -11,11 +12,12 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { AddPopupComponent } from '../add-popup/add-popup.component';
 
 @Component({
   selector: 'app-energy-stores',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, AddPopupComponent],
   providers: [OverviewService],
   templateUrl: './energy-stores.component.html',
   styleUrl: './energy-stores.component.css',
@@ -33,51 +35,6 @@ export class EnergyStoresComponent implements OnInit {
   energyStores: EnergyStore[] = [];
   addPopupActive: Boolean = false;
   increasePopupActive: Boolean = false;
-
-  types: { name: String; display: String }[] = [
-    { name: 'SOLAR', display: 'Solar' },
-    { name: 'WIND', display: 'Wind' },
-    { name: 'CONVENTIONAL', display: 'Konventionell' },
-  ];
-
-  private lessOrEqValidator(
-    controlName: string,
-    compareControlName: string,
-  ): ValidatorFn {
-    return (formGroup: AbstractControl): ValidationErrors | null => {
-      const control = formGroup.get(controlName);
-      const compareControl = formGroup.get(compareControlName);
-
-      if (!control || !compareControl) {
-        return null;
-      }
-
-      const controlValue = control.value;
-      const compareControlValue = compareControl.value;
-
-      if (
-        controlValue !== null &&
-        compareControlValue !== null &&
-        controlValue > compareControlValue
-      ) {
-        return { lessThan: true };
-      }
-
-      return null;
-    };
-  }
-
-  storeForm = this.formBuilder.group(
-    {
-      location: ['', Validators.required],
-      maxCapacity: [0, Validators.min(0)],
-      currentCapacity: [0, Validators.min(0)],
-      type: [this.types[0], Validators.required],
-    },
-    {
-      validators: this.lessOrEqValidator('currentCapacity', 'maxCapacity'),
-    },
-  );
 
   private capacityValidator(store: EnergyStore | null): ValidatorFn {
     return (formGroup: AbstractControl): ValidationErrors | null => {
@@ -113,21 +70,12 @@ export class EnergyStoresComponent implements OnInit {
       .subscribe((energyStores) => (this.energyStores = energyStores));
   }
 
-  addEnergyStore(): void {
-    const newEnergyStore = {
-      type: this.storeForm.get('type')?.value?.name,
-      maxCapacity: this.storeForm.get('maxCapacity')?.value,
-      currentCapacity: this.storeForm.get('currentCapacity')?.value,
-      location: this.storeForm.get('location')?.value,
-    } as NewEnergyStore;
-
+  addEnergyStore(newEnergyStore: NewEnergyStore): void {
     this.energyStoreService
       .addEnergyStore(newEnergyStore)
       .subscribe((energyStore) => this.energyStores.push(energyStore));
 
     this.newStore.emit(newEnergyStore);
-
-    this.closeAddPopup();
   }
 
   deleteStoreFromNetwork(store: EnergyStore): void {
@@ -148,16 +96,6 @@ export class EnergyStoresComponent implements OnInit {
 
     this.increasedCapacity.emit(this.increaseForm.get('amount')?.value!);
     this.closeIncreasePopup();
-  }
-
-  openAddPopup(): void {
-    this.addPopupActive = true;
-  }
-
-  closeAddPopup(): void {
-    this.addPopupActive = false;
-
-    this.storeForm.reset(); //TODO: reset to default values
   }
 
   openIncreasePopup(store: EnergyStore): void {

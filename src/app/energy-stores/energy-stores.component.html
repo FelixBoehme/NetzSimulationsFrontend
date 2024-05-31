@@ -1,41 +1,4 @@
-<div class="add">
-  <button class="material-symbols-rounded icon-button" type="button" (click)="openAddPopup()">add</button>
-</div>
-
-<!-- TODO: -->
-<!-- close on escape press -->
-<!-- save on enter press if input is valid -->
-<div class="overlay" [ngStyle]="{'display': addPopupActive == true ? 'flex' : 'none'}">
-  <div class="popup">
-    <h2>Speicher hinzuf&uuml;gen</h2>
-    <form [formGroup]="storeForm">
-      <p>
-        <label for="location">Standort: </label>
-        <input id="location" type="text" formControlName="location">
-      </p>
-      <p>
-        <label for="max-capacity">Maximale Kapazität: </label>
-        <input id="max-capacity" type="number" formControlName="maxCapacity">
-      </p>
-      <p>
-        <label for="current-capacity">Aktuelle Kapazität: </label>
-        <input id="current-capacity" type="number" formControlName="currentCapacity">
-      </p>
-      <p>
-        <label for="type">Typ: </label>
-        <select formControlName="type">
-          <option *ngFor="let type of types" [ngValue]="type">
-          {{type.display}}
-          </option>
-        </select>
-      </p>
-    </form>
-    <div class="actions">
-      <button class="button" (click)="closeAddPopup()">Abbrechen</button>
-      <button class="button" (click)="addEnergyStore()" [disabled]="!storeForm.valid">Speichern</button>
-    </div>
-  </div>
-</div>
+<app-add-popup (addStore)="addEnergyStore($event)"></app-add-popup>
 
 <table>
   <thead>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { EnergyStore } from '../energy-store';
+import { NewEnergyStore } from '../energy-store';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class StoreListService {
     return this.http.get<EnergyStore[]>(this.energyStoreURL + '/unassigned');
   }
 
-  addUnassignedEnergyStore(energyStore: EnergyStore) {
+  addUnassignedEnergyStore(energyStore: NewEnergyStore) {
     return this.http.post<EnergyStore>(this.energyStoreURL, energyStore);
   }
 

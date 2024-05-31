@@ -1,9 +1,7 @@
 <h1>Liste nicht zugewiesener Speicher</h1>
 
 <div>
-  <div class="add">
-    <button class="icon-button material-symbols-rounded">add</button>
-  </div>
+  <app-add-popup (addStore)="addUnassignedEnergyStore($event)"></app-add-popup>
 
   <table>
     <thead>

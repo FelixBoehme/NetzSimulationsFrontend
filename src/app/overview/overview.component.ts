@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Network, Overview, OverviewService } from './overview.service';
 import { EnergyStoresComponent } from '../energy-stores/energy-stores.component';
-import { NewEnergyStore } from '../energy-stores/energy-stores.service';
+import { NewEnergyStore } from '../energy-store';
 import { EnergyStore } from '../energy-store';
 import {
   AbstractControl,
