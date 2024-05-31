@@ -24,12 +24,28 @@
             <button class="material-symbols-rounded icon-button" (click)="softDeleteStore(store)">
               close
             </button>
-            <!-- <button class="material-symbols-rounded icon-button" (click)="openIncreasePopup(store)" [disabled]="store.currentCapacity === store.maxCapacity"> -->
-            <!--   arrow_upward -->
-            <!-- </button> -->
+            <button class="material-symbols-rounded icon-button" (click)="switch.openPopup();selectedStoreId=store.id">
+              sync_alt
+            </button>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <app-popup #switch>
+    <h2>Speicher Netzwerk zuweisen</h2>
+    <form [formGroup]="switchForm">
+      <label for="network">Netzwerk: </label>
+      <select formControlName="network" #network>
+        <option *ngFor="let network of networks" [value]="network.id">
+        {{network.name}}
+        </option>
+      </select>
+    </form>
+    <div class="actions">
+      <button class="button" (click)="switch.closePopup(); switchForm.reset();">Abbrechen</button>
+      <button class="button" [disabled]="!switchForm.valid" (click)="addToNetwork(network.value); switch.closePopup()">Speichern</button>
+    </div>
+  </app-popup>
 </div>

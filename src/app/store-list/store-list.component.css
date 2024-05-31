@@ -12,3 +12,8 @@
   display: flex;
   justify-content: right;
 }
+
+.table-actions {
+  display: flex;
+  gap: 4px;
+}
