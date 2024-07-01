@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { OverviewComponent } from './overview/overview.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NavbarComponent } from './navbar/navbar.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -29,6 +31,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
   imports: [
     AppRoutingModule,
     BrowserModule,
+    NavbarComponent,
     SidebarComponent,
     OverviewComponent,
     KeycloakAngularModule,
@@ -41,6 +44,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       deps: [KeycloakService],
     },
     importProvidersFrom(HttpClientModule),
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,36 @@
+@use '@angular/material' as mat;
+@import '../../theme/config.scss';
+
+.navbar-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 32px;
+  padding: 12px 16px;
+  background: mat.get-theme-color($theme, surface-container-low);
+
+  > .mat-mdc-button {
+    &:nth-child(2) {
+      margin-left: auto;
+    }
+  }
+}
+
+.mat-headline-5 {
+  margin: 0;
+  color: mat.get-theme-color($theme, primary);
+}
+
+.navbar-header-item-selected {
+  background: rgba(mat.get-theme-color($theme, primary), 0.1);
+}
+
+.logout {
+  margin-left: 1%;
+}
+
+.mat-mdc-button {
+  border-radius: 23px;
+  padding: 20px;
+  --mdc-text-button-container-height: none;
+}

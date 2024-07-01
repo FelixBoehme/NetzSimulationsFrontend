@@ -1,0 +1,9 @@
+<nav class="navbar-header">
+  <span class="mat-headline-5">Netzsimulation</span>
+  @for (link of links; track link) {
+  <a mat-button routerLink="{{link.toLowerCase()}}" routerLinkActive="navbar-header-item-selected">{{link}}</a>
+  }
+  <button mat-icon-button class="logout">
+    <mat-icon>logout</mat-icon>
+  </button>
+</nav>

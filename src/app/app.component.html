@@ -1,12 +1,14 @@
-<div class="logout">
-  <button class="button" *ngIf="isLoggedIn" type="button" (click)="logout()">Logout</button>
-</div>
-
-<div class="menu">
-  <span class="material-symbols-rounded" (click)="sidebar.toggleSidebar()">menu</span>
-</div>
+<!-- <div class="logout"> -->
+<!--   <button class="button" *ngIf="isLoggedIn" type="button" (click)="logout()">Logout</button> -->
+<!-- </div> -->
+<!---->
+<!-- <div class="menu"> -->
+<!--   <span class="material-symbols-rounded" (click)="sidebar.toggleSidebar()">menu</span> -->
+<!-- </div> -->
 
 <div>
-  <app-sidebar #sidebar></app-sidebar>
+  <app-navbar></app-navbar>
+
+  <!-- <app-sidebar #sidebar></app-sidebar> -->
   <router-outlet></router-outlet>
 </div>
