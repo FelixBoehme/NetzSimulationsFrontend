@@ -4,6 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import { KeyValuePipe } from '@angular/common';
 import { navRoutes } from '../routes';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -19,5 +20,11 @@ import { navRoutes } from '../routes';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  routes = navRoutes;
+  public routes = navRoutes;
+
+  constructor(private readonly keycloak: KeycloakService) {}
+
+  public logout() {
+    this.keycloak.logout();
+  }
 }
