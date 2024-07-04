@@ -1,11 +1,11 @@
 <nav class="navbar-header">
   <h3>Netzsimulation</h3>
-  @for (link of links | keyvalue; track link.key) {
-    <a mat-button class="navbar-link" routerLink="{{link.key.toLowerCase()}}" routerLinkActive="navbar-header-item-selected" #rla="routerLinkActive">
+  @for (route of routes; track route.path) {
+    <a mat-button class="navbar-link" [routerLink]="route.path" routerLinkActive="navbar-header-item-selected" #rla="routerLinkActive">
       <div class="navbar-link-content" [class.active]="rla.isActive">
-        <mat-icon [class.filled]="rla.isActive">{{link.value}}</mat-icon>
+        <mat-icon [class.filled]="rla.isActive">{{route.icon}}</mat-icon>
         <span>
-          {{link.key}}
+          {{route.title}}
         </span>
       </div>
     </a>
