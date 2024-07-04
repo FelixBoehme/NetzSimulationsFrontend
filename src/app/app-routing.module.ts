@@ -5,7 +5,9 @@ import { OverviewComponent } from './overview/overview.component';
 import { StoreListComponent } from './store-list/store-list.component';
 
 const routes: Routes = [
-  { path: '', component: OverviewComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: OverviewComponent, canActivate: [AuthGuard]},
+  { path: 'grid', component: OverviewComponent, canActivate: [AuthGuard]},
   {
     path: 'stores',
     component: StoreListComponent,

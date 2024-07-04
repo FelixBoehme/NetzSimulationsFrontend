@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import { KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -11,11 +12,18 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
     MatIconModule,
     RouterLink,
     RouterLinkActive,
+    KeyValuePipe,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  links: String[] = ["Dashboard", "Grid", "Stores"];
-  activeLink = this.links[0];
+  links: Map<string, string> = new Map<string, string>(
+    [
+      ["Dashboard", "dashboard"],
+      ["Grid", "grid_on"],
+      ["Stores", "bolt"]
+    ]
+  );
+  activeLink = this.links.get("Dashboard");
 }

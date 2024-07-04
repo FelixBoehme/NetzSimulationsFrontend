@@ -16,21 +16,44 @@
   }
 }
 
-.mat-headline-5 {
+h3 {
   margin: 0;
+  font-family: mat.get-theme-typography($theme, body-small, font-family);
   color: mat.get-theme-color($theme, primary);
 }
 
+// TODO: decide wether to use animation or not
+/* .navbar-link { */
+/*   transition: all 0.5s ease; */
+/* } */
+/**/
+/* .navbar-link:active { */
+/*   transform: scale(0.95); */
+/*   transition: all 0.1s; */
+/* } */
+
+.navbar-link-content {
+  font-size: mat.get-theme-typography($theme, body-large, font-size);
+  font-weight: 600;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: mat.get-theme-color($theme, on-surface-variant);
+
+  &.active {
+    color: mat.get-theme-color($theme, primary);
+  }
+}
+
 .navbar-header-item-selected {
-  background: rgba(mat.get-theme-color($theme, primary), 0.1);
+  background: mat.get-theme-color($theme, primary-container);
+}
+
+.mat-mdc-button {
+  --mdc-text-button-container-height: none;
 }
 
 .logout {
   margin-left: 1%;
-}
-
-.mat-mdc-button {
-  border-radius: 23px;
-  padding: 20px;
-  --mdc-text-button-container-height: none;
 }

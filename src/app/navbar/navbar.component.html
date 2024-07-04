@@ -1,7 +1,14 @@
 <nav class="navbar-header">
-  <span class="mat-headline-5">Netzsimulation</span>
-  @for (link of links; track link) {
-  <a mat-button routerLink="{{link.toLowerCase()}}" routerLinkActive="navbar-header-item-selected">{{link}}</a>
+  <h3>Netzsimulation</h3>
+  @for (link of links | keyvalue; track link.key) {
+    <a mat-button class="navbar-link" routerLink="{{link.key.toLowerCase()}}" routerLinkActive="navbar-header-item-selected" #rla="routerLinkActive">
+      <div class="navbar-link-content" [class.active]="rla.isActive">
+        <mat-icon [class.filled]="rla.isActive">{{link.value}}</mat-icon>
+        <span>
+          {{link.key}}
+        </span>
+      </div>
+    </a>
   }
   <button mat-icon-button class="logout">
     <mat-icon>logout</mat-icon>

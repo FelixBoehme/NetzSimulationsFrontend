@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NavbarComponent } from './navbar/navbar.component';
+import { MatIconRegistry } from '@angular/material/icon';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -48,4 +49,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(iconRegistry: MatIconRegistry) {
+    iconRegistry.setDefaultFontSetClass('material-symbols-rounded');
+  }
+}
