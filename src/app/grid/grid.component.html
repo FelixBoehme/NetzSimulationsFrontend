@@ -1,9 +1,16 @@
-@if (getNetworkName() !== undefined) {
+@if (networksExist) {
 
 <div class="grid-page">
-  <div class="network-selection">
-    <span class="network-name">{{this.networkService.getCurrentNetwork()!.name}}</span>
-  </div>
+  <!-- <div class="network-selection"> -->
+  <!--   <span class="network-name">{{this.networkService.getCurrentNetwork()!.name}}</span> -->
+  <!-- </div> -->
+  <app-network-picker></app-network-picker>
+</div>
+
+} @else if (networksExist === undefined) {
+
+<div class="loading-spinner">
+  <mat-spinner></mat-spinner>
 </div>
 
 } @else {

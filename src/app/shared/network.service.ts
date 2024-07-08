@@ -16,7 +16,7 @@ export class NetworkService {
     return this.currentNetwork;
   }
 
-  setCurrentNetwork(network: Network): void {
+  setCurrentNetwork(network: undefined | Network): void {
     this.currentNetwork = network;
   }
 

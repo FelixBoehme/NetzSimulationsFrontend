@@ -1,0 +1,25 @@
+@use '@angular/material' as mat;
+@import '../../theme/config.scss';
+
+.network-button {
+  padding: calc(mat.get-theme-typography($theme, display-medium, font-size) * 0.8);
+}
+
+.network-button-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.network-name {
+  color: mat.get-theme-color($theme, primary);
+  font-family: mat.get-theme-typography($theme, display-medium, font-family);
+  font-size: mat.get-theme-typography($theme, display-medium, font-size);
+  font-weight: 500;
+}
+
+.drop-down-arrow {
+  transform: scale(4);
+  color: mat.get-theme-color($theme, secondary);
+}

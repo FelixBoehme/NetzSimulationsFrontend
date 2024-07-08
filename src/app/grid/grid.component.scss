@@ -7,17 +7,20 @@
 
 .grid-page {
   height: 100%;
-}
-
-.network-selection {
   display: flex;
   align-items: start;
   justify-content: center;
 }
 
-.network-name {
-  color: mat.get-theme-color($theme, primary);
-  font-family: mat.get-theme-typography($theme, display-medium, font-family);
-  font-size: mat.get-theme-typography($theme, display-medium, font-size);
-  font-weight: 500;
+app-network-picker {
+  height: 15%;
+  display: flex;
+  align-items: center;
+}
+
+.loading-spinner {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,29 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { NetworkService } from '../shared/network.service';
-import { Network } from '../shared/network';
+import { NetworkPickerComponent } from '../network-picker/network-picker.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-grid',
   standalone: true,
-  imports: [],
+  imports: [NetworkPickerComponent, MatProgressSpinnerModule],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
 })
 export class GridComponent implements OnInit {
-  networks: Network[] = [];
+  networksExist: undefined | boolean;
+
   constructor(public networkService: NetworkService) {}
 
   ngOnInit(): void {
     this.networkService.getAllNetworks().subscribe((networks) => {
-      this.networks = networks;
-
-      if (networks.length != 0 && this.networkService.getCurrentNetwork() === undefined) {
-        this.networkService.setCurrentNetwork(networks[0]);
+      if (networks.length > 0) {
+        this.networksExist = true;
+      } else {
+        this.networksExist = false;
+        this.networkService.setCurrentNetwork(undefined);
       }
     });
-  }
-
-  getNetworkName(): undefined | string {
-    return this.networkService.getCurrentNetwork()?.name
   }
 }

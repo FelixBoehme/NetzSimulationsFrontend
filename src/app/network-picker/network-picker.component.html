@@ -1,0 +1,13 @@
+<button mat-button [matMenuTriggerFor]="versionPicker" class="network-button">
+  <div class="network-button-content">
+    <span class="network-name">
+      {{getNetworkName()}}
+    </span>
+    <mat-icon class="drop-down-arrow">arrow_drop_down</mat-icon>
+  </div>
+</button>
+<mat-menu #versionPicker="matMenu" xPosition="before">
+  @for (network of networks; track network.id) {
+    <button mat-menu-item (click)="setNetwork(network)">{{network.name}}</button>
+  }
+</mat-menu>
