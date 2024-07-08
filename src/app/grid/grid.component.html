@@ -1,0 +1,13 @@
+@if (getNetworkName() !== undefined) {
+
+<div class="grid-page">
+  <div class="network-selection">
+    <span class="network-name">{{this.networkService.getCurrentNetwork()!.name}}</span>
+  </div>
+</div>
+
+} @else {
+
+<span>No Networks</span>
+
+}

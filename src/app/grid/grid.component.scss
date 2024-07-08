@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+@import '../../theme/config.scss';
+
+:host {
+  height: 100%;
+}
+
+.grid-page {
+  height: 100%;
+}
+
+.network-selection {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+.network-name {
+  color: mat.get-theme-color($theme, primary);
+  font-family: mat.get-theme-typography($theme, display-medium, font-family);
+  font-size: mat.get-theme-typography($theme, display-medium, font-size);
+  font-weight: 500;
+}

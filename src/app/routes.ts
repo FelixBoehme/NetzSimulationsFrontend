@@ -1,3 +1,4 @@
+import { GridComponent } from "./grid/grid.component";
 import { AuthGuard } from "./guard/auth.guard";
 import { OverviewComponent } from "./overview/overview.component";
 import { StoreListComponent } from "./store-list/store-list.component";
@@ -12,7 +13,7 @@ export const navRoutes = [
   },
   {
     path: 'grid',
-    component: OverviewComponent,
+    component: GridComponent,
     canActivate: [AuthGuard],
     title: "Grid",
     icon: "grid_on",

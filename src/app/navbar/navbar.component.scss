@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @import '../../theme/config.scss';
 
-.navbar-header {
+.navbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
