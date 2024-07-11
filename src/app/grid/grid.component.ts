@@ -13,16 +13,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class GridComponent implements OnInit {
   networksExist: undefined | boolean;
 
-  constructor(public networkService: NetworkService) {}
+  constructor(public networkService: NetworkService) {
+    this.networkService
+      .getNetworksExist()
+      .subscribe(
+        (networksExist) => (this.networksExist = networksExist ?? undefined),
+      );
+
+  }
 
   ngOnInit(): void {
-    this.networkService.getAllNetworks().subscribe((networks) => {
-      if (networks.length > 0) {
-        this.networksExist = true;
-      } else {
-        this.networksExist = false;
-        this.networkService.setCurrentNetwork(undefined);
-      }
-    });
+    this.networkService.refreshNetworks();
   }
 }

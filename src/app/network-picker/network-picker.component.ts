@@ -13,27 +13,21 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './network-picker.component.scss',
 })
 export class NetworkPickerComponent implements OnInit {
+  networkName: undefined | string;
   networks: Network[] = [];
   constructor(public networkService: NetworkService) {}
 
   ngOnInit(): void {
-    this.networkService.getAllNetworks().subscribe((networks) => {
-      this.networks = networks;
+    this.networkService
+      .getCurrentNetwork()
+      .subscribe((network) => (this.networkName = network?.name));
 
-      if (
-        networks.length != 0 &&
-        this.networkService.getCurrentNetwork() === undefined
-      ) {
-        this.networkService.setCurrentNetwork(networks[0]);
-      }
-    });
+    this.networkService
+      .getAllNetworks()
+      .subscribe((networks) => (this.networks = networks));
   }
 
   setNetwork(network: Network): void {
     this.networkService.setCurrentNetwork(network);
-  }
-
-  getNetworkName(): undefined | string {
-    return this.networkService.getCurrentNetwork()?.name;
   }
 }
