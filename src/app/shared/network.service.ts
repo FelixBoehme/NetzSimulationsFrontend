@@ -28,8 +28,11 @@ export class NetworkService {
       .subscribe({
         next: (networks: Network[]) => {
           this.allNetworks.next(networks);
-          this.setCurrentNetwork(networks[0] ?? undefined);
           this.networksExist.next(networks.length > 0)
+
+          if (this.currentNetwork.value === undefined) {
+            this.setCurrentNetwork(networks[0] ?? undefined);
+          }
         },
         error: (error) => {
           console.log('Request timed out or failed:', error);
