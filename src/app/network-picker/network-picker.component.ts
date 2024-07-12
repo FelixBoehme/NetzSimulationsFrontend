@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class NetworkPickerComponent implements OnInit {
   networkName: undefined | string;
   networks: Network[] = [];
-  constructor(public networkService: NetworkService) {}
+  constructor(private networkService: NetworkService) {}
 
   ngOnInit(): void {
     this.networkService

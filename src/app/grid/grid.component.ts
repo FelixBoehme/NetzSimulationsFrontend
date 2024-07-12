@@ -14,7 +14,7 @@ import { interval } from 'rxjs';
 export class GridComponent implements OnInit {
   networksExist: undefined | boolean;
 
-  constructor(public networkService: NetworkService) {
+  constructor(private networkService: NetworkService) {
     this.networkService
       .getNetworksExist()
       .subscribe(
