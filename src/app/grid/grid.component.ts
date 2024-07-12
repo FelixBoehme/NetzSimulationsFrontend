@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NetworkService } from '../shared/network.service';
 import { NetworkPickerComponent } from '../network-picker/network-picker.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-grid',
@@ -20,6 +21,7 @@ export class GridComponent implements OnInit {
         (networksExist) => (this.networksExist = networksExist ?? undefined),
       );
 
+    interval(5000).subscribe(() => this.networkService.refreshNetworks());
   }
 
   ngOnInit(): void {
