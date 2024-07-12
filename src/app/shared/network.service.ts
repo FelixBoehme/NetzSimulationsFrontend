@@ -1,3 +1,4 @@
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -16,7 +17,7 @@ export class NetworkService {
   private networksExist: BehaviorSubject<undefined | boolean> =
     new BehaviorSubject<undefined | boolean>(undefined);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) {
     this.refreshNetworks();
   }
 
@@ -31,7 +32,9 @@ export class NetworkService {
           this.networksExist.next(networks.length > 0)
         },
         error: (error) => {
-          console.log('Request timed out or failed:', error); //TODO: show visual feedback
+          console.log('Request timed out or failed:', error);
+          let snackBarRef = this._snackBar.open("Unable to load data. Retrying in 5 Seconds.", "Retry", {duration: 3000});
+          snackBarRef.onAction().subscribe(() => this.refreshNetworks())
         },
       });
   }
