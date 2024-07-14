@@ -3,11 +3,16 @@ import { NetworkService } from '../shared/network.service';
 import { NetworkPickerComponent } from '../network-picker/network-picker.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval } from 'rxjs';
+import { NetworkOverviewComponent } from '../network-overview/network-overview.component';
 
 @Component({
   selector: 'app-grid',
   standalone: true,
-  imports: [NetworkPickerComponent, MatProgressSpinnerModule],
+  imports: [
+    NetworkPickerComponent,
+    NetworkOverviewComponent,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
 })
