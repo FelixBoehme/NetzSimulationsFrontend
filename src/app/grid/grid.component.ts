@@ -4,6 +4,10 @@ import { NetworkPickerComponent } from '../network-picker/network-picker.compone
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { interval } from 'rxjs';
 import { NetworkOverviewComponent } from '../network-overview/network-overview.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dialog.component';
 
 @Component({
   selector: 'app-grid',
@@ -12,6 +16,8 @@ import { NetworkOverviewComponent } from '../network-overview/network-overview.c
     NetworkPickerComponent,
     NetworkOverviewComponent,
     MatProgressSpinnerModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
@@ -19,7 +25,7 @@ import { NetworkOverviewComponent } from '../network-overview/network-overview.c
 export class GridComponent implements OnInit {
   networksExist: undefined | boolean;
 
-  constructor(private networkService: NetworkService) {
+  constructor(private networkService: NetworkService, private dialog: MatDialog) {
     this.networkService
       .getNetworksExist()
       .subscribe(
@@ -31,5 +37,9 @@ export class GridComponent implements OnInit {
 
   ngOnInit(): void {
     this.networkService.refreshNetworks();
+  }
+
+  openNetworkAddDialog(): void {
+    this.dialog.open(NetworkAddDialogComponent);
   }
 }

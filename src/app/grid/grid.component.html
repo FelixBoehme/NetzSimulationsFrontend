@@ -1,6 +1,6 @@
 @if (networksExist) {
 
-<div class="grid-page">
+<div class="grid-page list">
   <!-- <div class="network-selection"> -->
   <!--   <span class="network-name">{{this.networkService.getCurrentNetwork()!.name}}</span> -->
   <!-- </div> -->
@@ -10,12 +10,19 @@
 
 } @else if (networksExist === undefined) {
 
-<div class="loading-spinner">
+<div class="grid-page center">
   <mat-spinner></mat-spinner>
 </div>
 
 } @else {
 
-<span>No Networks</span>
+<div class="grid-page center warning">
+  <mat-icon class="network-information-icon">error</mat-icon>
+  <span class="network-information">No Networks<br>Available</span>
+  <button mat-flat-button (click)="openNetworkAddDialog()">
+    <mat-icon>add</mat-icon>
+    Add Network
+  </button>
+</div>
 
 }

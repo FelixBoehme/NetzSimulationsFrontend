@@ -25,6 +25,28 @@ export class NetworkService {
     this.refreshNetworks();
   }
 
+  addNetwork(networkName: string): void {
+    this.http
+      .post<Network>(environment.apiUrl + 'network', { name: networkName })
+      .pipe(timeout(5000))
+      .subscribe({
+        next: (network: Network) => {
+          this.networksExist.next(true);
+          this.currentNetwork.next(this.currentNetwork.value ?? network);
+          this.allNetworks.next([...this.allNetworks.value, network]);
+        },
+        error: (error) => {
+          console.log('Request timed out or failed:', error);
+          let snackBarRef = this._snackBar.open(
+            "Couldn't add new Network.",
+            'Retry',
+            { duration: 3000 },
+          );
+          snackBarRef.onAction().subscribe(() => this.addNetwork(networkName));
+        },
+      });
+  }
+
   refreshNetworks(): void {
     this.http
       .get<Network[]>(this.url + 'all')
@@ -66,7 +88,7 @@ export class NetworkService {
             { duration: 3000 },
           );
           snackBarRef.onAction().subscribe(() => this.refreshNetworks());
-        }
+        },
       });
   }
 

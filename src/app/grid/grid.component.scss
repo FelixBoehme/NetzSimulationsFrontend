@@ -10,14 +10,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 2rem;
-  gap: 3rem;
+
+  &.list {
+    gap: 3rem;
+  }
+
+  &.warning {
+    height: 75%;
+  }
 }
 
 app-network-picker {
   max-height: 10%;
   display: flex;
   align-items: center;
+  padding-top: 2rem;
 }
 
 app-network-overview {
@@ -26,9 +33,26 @@ app-network-overview {
   align-items: center;
 }
 
-.loading-spinner {
-  height: 100%;
-  display: flex;
+.center {
   justify-content: center;
-  align-items: center;
 }
+
+
+$icon-size: mat.get-theme-typography($theme, display-large, font-size) * 1.5;
+
+.network-information-icon {
+  color: mat.get-theme-color($theme, secondary);
+  font-size: $icon-size;
+  height: $icon-size;
+  width: $icon-size;
+}
+
+.network-information {
+  text-align: center;
+  color: mat.get-theme-color($theme, secondary);
+  font-family: mat.get-theme-typography($theme, display-large, font-family);
+  font-size: mat.get-theme-typography($theme, display-large, font-size);
+  font-weight: 500;
+  padding-bottom: 1.5rem;
+}
+
