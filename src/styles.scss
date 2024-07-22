@@ -20,3 +20,9 @@ mat-spinner {
 mat-progress-spinner {
   stroke-linecap: round;
 }
+
+app-store-table {
+  .mat-sort-header-container {
+    justify-content: center;
+  }
+}

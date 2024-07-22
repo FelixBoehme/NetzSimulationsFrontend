@@ -25,6 +25,7 @@ export class NetworkService {
     this.refreshNetworks();
   }
 
+  //TODO: maybe switch to pipe, switchMap, map flow
   addNetwork(networkName: string): void {
     this.http
       .post<Network>(environment.apiUrl + 'network', { name: networkName })
@@ -56,7 +57,7 @@ export class NetworkService {
           this.allNetworks.next(networks);
           this.networksExist.next(networks.length > 0);
 
-          if (this.currentNetwork.value === undefined) {
+          if (this.currentNetwork.value === undefined || networks.length === 0) {
             this.setCurrentNetwork(networks[0] ?? undefined);
           }
         },

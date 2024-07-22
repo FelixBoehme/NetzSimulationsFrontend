@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dialog.component';
+import { StoreTableComponent } from '../store-table/store-table.component';
 
 @Component({
   selector: 'app-grid',
@@ -15,6 +16,7 @@ import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dia
   imports: [
     NetworkPickerComponent,
     NetworkOverviewComponent,
+    StoreTableComponent,
     MatProgressSpinnerModule,
     MatIconModule,
     MatButtonModule,
@@ -25,7 +27,10 @@ import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dia
 export class GridComponent implements OnInit {
   networksExist: undefined | boolean;
 
-  constructor(private networkService: NetworkService, private dialog: MatDialog) {
+  constructor(
+    private networkService: NetworkService,
+    private dialog: MatDialog,
+  ) {
     this.networkService
       .getNetworksExist()
       .subscribe(

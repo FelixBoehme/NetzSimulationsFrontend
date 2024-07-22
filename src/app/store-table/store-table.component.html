@@ -1,0 +1,26 @@
+<div class="store-table">
+  <div class="store-table-no-data">
+    @if (isLoading) {
+      <mat-spinner></mat-spinner>
+    }
+    @else if (resultsLength === 0) {
+      <span>No Stores Available</span>
+    }
+  </div>
+
+  <div class="store-table-container" [style.min-height.px]="resultsLength === 0 ? 250 : 0">
+    <table mat-table [dataSource]="data" matSort matSortActive="location" matSortDirection="asc">
+      @for(column of displayedColumns; track column) {
+      <ng-container [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{toHeaderCase(column)}}</th>
+        <td mat-cell *matCellDef="let row">{{toTitleCase(row[column])}}</td>
+      </ng-container>
+      }
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="10" aria-label="Select page of GitHub search results"></mat-paginator>
+</div>

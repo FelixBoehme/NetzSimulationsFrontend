@@ -1,7 +1,7 @@
 import { GridComponent } from "./grid/grid.component";
 import { AuthGuard } from "./guard/auth.guard";
 import { OverviewComponent } from "./overview/overview.component";
-import { StoreListComponent } from "./store-list/store-list.component";
+import { StoreTableComponent } from "./store-table/store-table.component";
 
 export const navRoutes = [
   {
@@ -20,7 +20,7 @@ export const navRoutes = [
   },
   {
     path: 'stores',
-    component: StoreListComponent,
+    component: StoreTableComponent,
     canActivate: [AuthGuard],
     title: "Stores",
     icon: "bolt",

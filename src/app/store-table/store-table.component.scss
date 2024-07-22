@@ -1,0 +1,61 @@
+@use '@angular/material' as mat;
+@import '../../theme/config.scss';
+
+.store-table {
+  position: relative;
+}
+
+.store-table-container {
+  background-color: mat.get-theme-color($theme, surface);
+  border-radius: 24px 24px 0 0;
+}
+
+.store-table-no-data {
+  text-align: center;
+  font-family: mat.get-theme-typography($theme, headline-small, font-family);
+  font-size: mat.get-theme-typography($theme, headline-small, font-size);
+  font-weight: 500;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-mdc-row:nth-child(even){
+  background-color: mat.get-theme-color($theme, surface-container-low);
+}
+
+.mat-mdc-table{
+  border-radius: 24px 24px 0 0;
+  overflow:hidden;
+}
+
+.mat-mdc-paginator {
+  border-radius: 0 0 24px 24px;
+  overflow:hidden;
+}
+
+.mat-mdc-header-cell {
+ border-bottom: 2px solid mat.get-theme-color($theme, primary);
+
+}
+
+.mat-mdc-header-cell {
+  color: mat.get-theme-color($theme, primary);
+  font-family: mat.get-theme-typography($theme, headline-small, font-family);
+  font-size: mat.get-theme-typography($theme, headline-small, font-size);
+  font-weight: 500;
+  padding: 1rem;
+  white-space: pre;
+}
+
+.mat-mdc-cell {
+  text-align: center;
+  font-family: mat.get-theme-typography($theme, headline-small, font-family);
+  font-size: mat.get-theme-typography($theme, headline-small, font-size);
+  font-weight: 500;
+}
