@@ -12,6 +12,8 @@ import { environment } from '../../environments/environment';
 import {
   Observable,
   Subject,
+  debounceTime,
+  distinctUntilChanged,
   interval,
   map,
   merge,
@@ -20,11 +22,16 @@ import {
   takeUntil,
 } from 'rxjs';
 import { NetworkService } from '../shared/network.service';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-store-table',
@@ -35,6 +42,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatPaginatorModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatChipsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './store-table.component.html',
   styleUrl: './store-table.component.scss',
@@ -42,6 +55,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input({ required: true }) stores!: 'all' | 'network';
   @Input({ alias: 'disable' }) disabledColumns: String = '';
+  @Input() filters: { label: String; filter: String }[] = [
+    { label: 'SOLAR', filter: 'type:SOLAR' },
+    { label: 'WIND', filter: 'type:WIND' },
+    { label: 'CONVENTIONAL', filter: 'type:CONVENTIONAL' },
+    { label: 'EMPTY', filter: 'currentCapacity:0' },
+  ];
 
   displayedColumns: (keyof Store)[] = [
     'location',
@@ -57,6 +76,8 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   isLoading: boolean = true;
   resultsLength: number = 0;
   isActive = new Subject<void>();
+  locationControl = new FormControl('');
+  chipsControl = new FormControl([]);
 
   constructor(
     private http: HttpClient,
@@ -89,7 +110,19 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    merge(this.sort.sortChange, this.paginator.page, interval(5000))
+    merge(
+      this.sort.sortChange,
+      this.paginator.page,
+      this.locationControl.valueChanges.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+      ),
+      this.chipsControl.valueChanges.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+      ),
+      interval(5000),
+    )
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -98,6 +131,8 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex,
+            this.chipsControl.value!,
+            this.locationControl.value!.toString(),
           );
         }),
         map((data) => {
@@ -115,18 +150,22 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     sort: string,
     direction: string,
     page: number,
+    filterChips: string[],
+    filter: string,
   ): Observable<{ totalCount: number; stores: Store[] }> {
-    if (this.stores === 'network') {
-      return this.http.get<{ totalCount: number; stores: Store[] }>(
-        environment.apiUrl +
-          `network/${networkId}/stores?sort=${sort},${direction}&page=${page + 1}`,
-      );
-    }
+    let sortQuery = sort !== undefined ? `sort=${sort},${direction}` : "";
 
-    return this.http.get<{ totalCount: number; stores: Store[] }>(
-      environment.apiUrl +
-        `energyStore/active?sort=${sort},${direction}&page=${page + 1}`,
-    );
+    const filterParts = [];
+    if (filterChips) filterParts.push(filterChips);
+    if (filter) filterParts.push(`location:${filter}`);
+
+    const filterQuery = filterParts.length ? `&search=${filterParts.join(',')}` : '';
+
+    const baseUrl = environment.apiUrl;
+    const endpoint = this.stores === 'network' ? `network/${networkId}/stores` : 'energyStore/active';
+    const url = `${baseUrl}${endpoint}?${sortQuery}&page=${page + 1}&size=15${filterQuery}`;
+
+    return this.http.get<{ totalCount: number; stores: Store[] }>(url)
   }
 
   toHeaderCase(str: string): string {

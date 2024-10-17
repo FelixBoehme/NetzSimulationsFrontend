@@ -4,6 +4,12 @@
   height: 100%;
 }
 
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .logout {
   float: right;
   padding: 1rem;

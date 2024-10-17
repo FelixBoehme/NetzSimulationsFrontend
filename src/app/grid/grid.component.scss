@@ -2,7 +2,8 @@
 @import '../../theme/config.scss';
 
 :host {
-  height: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 .grid-page {
@@ -11,31 +12,26 @@
   flex-direction: column;
   align-items: center;
 
-  &.list {
-    gap: 3rem;
-  }
-
   &.warning {
     height: 75%;
   }
 }
 
 app-network-picker {
-  max-height: 10%;
+  height: 10%;
   display: flex;
   align-items: center;
-  padding-top: 2rem;
 }
 
 app-network-overview {
-  max-height: 25%;
+  height: 25%;
   display: flex;
   align-items: center;
 }
 
 app-store-table {
-  width: 65%;
-  max-height: 65%;
+  width: 100%;
+  height: 65%;
 }
 
 .center {

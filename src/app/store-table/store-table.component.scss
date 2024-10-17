@@ -1,11 +1,85 @@
+@use "sass:math";
 @use '@angular/material' as mat;
 @import '../../theme/config.scss';
 
-.store-table {
-  position: relative;
-}
+$padding: 50px;
+$padding-half: math.div($padding, 2);
 
 .store-table-container {
+  display: flex;
+  height: 100%;
+}
+
+.store-table-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  height: calc(100% - #{$padding});
+  padding: $padding-half $padding-half $padding-half $padding ;
+  gap: $padding-half;
+
+  > div {
+     background: mat.get-theme-color($theme, surface-variant);
+     border-radius: 28px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding: 16px;
+
+     > .title {
+       color: mat.get-theme-color($theme, primary);
+       font-family: mat.get-theme-typography($theme, headline-large, font-family);
+       font-size: mat.get-theme-typography($theme, headline-large, font-size);
+       font-weight: 500;
+     }
+
+     > .search {
+       padding-top: 1.5rem;
+     }
+  }
+
+}
+
+.store-table-filter {
+  height: 70%;
+}
+
+.store-table-add {
+  height: 30%;
+
+  .button-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+
+    .button {
+      background-color: mat.get-theme-color($theme, on-surface-variant);
+      font-size: mat.get-theme-typography($theme, body-large, font-size);
+      padding: mat.get-theme-typography($theme, body-large, font-size) * 1.5;
+
+    }
+  }
+}
+
+.store-table-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 $padding 0 $padding-half ;
+}
+
+.store-table {
+  background-color: white;
+  position: relative;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.store-table-content {
   background-color: mat.get-theme-color($theme, surface);
   border-radius: 24px 24px 0 0;
 }
@@ -19,7 +93,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  top: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,7 +110,6 @@
 
 .mat-mdc-paginator {
   border-radius: 0 0 24px 24px;
-  overflow:hidden;
 }
 
 .mat-mdc-header-cell {

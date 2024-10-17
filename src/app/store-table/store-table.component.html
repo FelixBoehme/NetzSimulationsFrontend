@@ -1,26 +1,68 @@
-<div class="store-table">
-  <div class="store-table-no-data">
-    @if (isLoading) {
-      <mat-spinner></mat-spinner>
-    }
-    @else if (resultsLength === 0) {
-      <span>No Stores Available</span>
-    }
+<div class="store-table-container">
+  <div class="store-table-sidebar">
+    <div class="store-table-filter">
+      <span class="title">Filter</span>
+      <div class="search">
+        <mat-form-field appearance="outline">
+          <mat-label>Location</mat-label>
+          <input matInput [formControl]="locationControl">
+          <mat-icon matPrefix>search</mat-icon>
+          <button mat-icon-button matSuffix (click)="locationControl.setValue('')">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="chips">
+        <mat-chip-listbox [formControl]="chipsControl" multiple>
+          @for(filter of filters; track filter.label) {
+            <mat-chip-option [value]="filter.filter">{{filter.label}}</mat-chip-option>
+          }
+        </mat-chip-listbox>
+      </div>
+    </div>
+    <div class="store-table-add">
+      <span class="title">Add</span>
+      <div class="button-container">
+        <div>
+          <button mat-flat-button class="button">
+            <mat-icon>add</mat-icon>
+            Add Store
+          </button>
+        </div>
+        <div>
+          <button mat-flat-button class="button">
+            <mat-icon>swap_horiz</mat-icon>
+            Assign Store to Network
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="store-table-wrapper">
+    <div class="store-table">
+      <div class="store-table-no-data">
+        @if (isLoading) {
+        <mat-spinner></mat-spinner>
+        }
+        @else if (resultsLength === 0) {
+        <span>No Stores Found</span>
+        }
+      </div>
 
-  <div class="store-table-container" [style.min-height.px]="resultsLength === 0 ? 250 : 0">
-    <table mat-table [dataSource]="data" matSort matSortActive="location" matSortDirection="asc">
-      @for(column of displayedColumns; track column) {
-      <ng-container [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{toHeaderCase(column)}}</th>
-        <td mat-cell *matCellDef="let row">{{toTitleCase(row[column])}}</td>
-      </ng-container>
-      }
+      <div class="store-table-content" [style.min-height.px]="resultsLength === 0 ? 250 : 0">
+        <table mat-table [dataSource]="data" matSort matSortDirection="asc">
+          @for(column of displayedColumns; track column) {
+          <ng-container [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{toHeaderCase(column)}}</th>
+            <td mat-cell *matCellDef="let row">{{toTitleCase(row[column])}}</td>
+          </ng-container>
+          }
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+    <mat-paginator [length]="resultsLength" [pageSize]="15" aria-label="Select page of store search results"></mat-paginator>
   </div>
-
-  <mat-paginator [length]="resultsLength" [pageSize]="10" aria-label="Select page of GitHub search results"></mat-paginator>
 </div>
