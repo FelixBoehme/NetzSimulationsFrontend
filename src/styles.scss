@@ -43,3 +43,9 @@ app-store-table {
     padding: 4px;
   }
 }
+
+.shrinking-mat-form-field {
+  .mat-mdc-form-field-infix {
+    width: auto !important;
+  }
+}

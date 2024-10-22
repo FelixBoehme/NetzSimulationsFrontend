@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NetworkService } from '../shared/network.service';
+
 
 @Component({
   selector: 'app-network-add-dialog',
@@ -26,11 +27,16 @@ import { NetworkService } from '../shared/network.service';
   styleUrl: './network-add-dialog.component.scss',
 })
 export class NetworkAddDialogComponent {
-  constructor(private networkService: NetworkService) {}
+  constructor(
+    private networkService: NetworkService,
+    private dialogRef: MatDialogRef<NetworkAddDialogComponent>
+  ) {}
 
   networkNameControl = new FormControl('', [Validators.required]);
 
   addNetwork(): void {
+    this.dialogRef.close()
+
     const networkName: string = this.networkNameControl.value!;
     this.networkService.addNetwork(networkName);
   }

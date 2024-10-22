@@ -2,21 +2,20 @@
 @use '@angular/material' as mat;
 @import '../../theme/config.scss';
 
-$padding: 50px;
-$padding-half: math.div($padding, 2);
+$padding: 30px;
 
 .store-table-container {
   display: flex;
-  height: 100%;
+  height: calc(100% - $padding);
+  padding: 0 $padding $padding $padding ;
 }
 
 .store-table-sidebar {
   display: flex;
   flex-direction: column;
   width: 15%;
-  height: calc(100% - #{$padding});
-  padding: $padding-half $padding-half $padding-half $padding ;
-  gap: $padding-half;
+  height: 100%;
+  gap: $padding;
 
   > div {
      background: mat.get-theme-color($theme, surface-variant);
@@ -24,7 +23,7 @@ $padding-half: math.div($padding, 2);
      display: flex;
      flex-direction: column;
      align-items: center;
-     padding: 16px;
+     padding: 20px;
 
      > .title {
        color: mat.get-theme-color($theme, primary);
@@ -41,11 +40,11 @@ $padding-half: math.div($padding, 2);
 }
 
 .store-table-filter {
-  height: 70%;
+  height: 65%;
 }
 
 .store-table-add {
-  height: 30%;
+  height: 35%;
 
   .button-container {
     height: 100%;
@@ -69,7 +68,7 @@ $padding-half: math.div($padding, 2);
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 $padding 0 $padding-half ;
+  padding: 0 0 0 $padding ;
 }
 
 .store-table {

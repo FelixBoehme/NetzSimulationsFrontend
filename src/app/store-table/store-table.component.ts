@@ -32,6 +32,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
+import { StoreAddDialogComponent } from '../store-add-dialog/store-add-dialog.component';
 
 @Component({
   selector: 'app-store-table',
@@ -58,19 +60,20 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() filters: { label: String; filter: String }[] = [
     { label: 'SOLAR', filter: 'type:SOLAR' },
     { label: 'WIND', filter: 'type:WIND' },
-    { label: 'CONVENTIONAL', filter: 'type:CONVENTIONAL' },
-    { label: 'EMPTY', filter: 'currentCapacity:0' },
+    { label: 'KONVENTIONELL', filter: 'type:CONVENTIONAL' },
+    { label: 'LEER', filter: 'currentCapacity:0' },
   ];
 
-  displayedColumns: (keyof Store)[] = [
-    'location',
-    'type',
-    'currentCapacity',
-    'maxCapacity',
-    'id',
-    'networkName',
-    'networkId',
+  displayedColumns: {key: keyof Store, label: string}[] = [
+    {key:'location', label: "Standort" },
+    {key:'type', label: "Typ"},
+    {key:'currentCapacity', label: "Aktuelle Kapazität"},
+    {key:'maxCapacity', label: "Maximale Kapazität"},
+    {key:'id', label:"ID"},
+    {key:'networkName', label: "Netzwerkname"},
+    {key:'networkId', label: "Netzwerk ID"},
   ];
+  displayedColumnsKeys: (keyof Store)[] = [];
   data: Store[] = [];
   networkId: undefined | number;
   isLoading: boolean = true;
@@ -82,24 +85,45 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private networkService: NetworkService,
+    private storeAddDialog: MatDialog,
   ) {
     this.networkService.getCurrentNetwork().subscribe((network) => {
       this.networkId = network!.id;
     });
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel="Ergebnisse pro Seite:";
+    this.paginator._intl.nextPageLabel="Nächste Seite";
+    this.paginator._intl.previousPageLabel="Vorherige Seite";
+    this.paginator._intl.getRangeLabel=(page: number, pageSize: number, length: number) => {
+      if (length == 0 || pageSize == 0) {
+        return `0 von ${length}`;
+      }
+
+      length = Math.max(length, 0);
+
+      const startIndex = page * pageSize;
+
+      // If the start index exceeds the list length, do not try and fix the end index to the end.
+      const endIndex =
+        startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+
+      return `${startIndex + 1} – ${endIndex} von ${length}`;
+    };
+
     let disabledColumns = this.disabledColumns.split(/, +/);
     if (this.stores === 'network') {
       disabledColumns.push('networkName', 'networkId');
     }
 
     this.displayedColumns = this.displayedColumns.filter(
-      (col) => !disabledColumns.includes(col),
+      (col) => !disabledColumns.includes(col.key),
     );
+    this.displayedColumnsKeys = this.displayedColumns.map(col => col.key);
   }
 
   ngOnDestroy(): void {
@@ -168,14 +192,6 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     return this.http.get<{ totalCount: number; stores: Store[] }>(url)
   }
 
-  toHeaderCase(str: string): string {
-    return str
-      .replace(/([A-Z])/g, ' $1')
-      .replace(/^./, (str) => str.toUpperCase())
-      .replace(/ /, '\n')
-      .trim();
-  }
-
   toTitleCase(input: undefined | number | string): string {
     if (input == undefined) return '';
 
@@ -183,5 +199,9 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
       input.toString().charAt(0).toUpperCase() +
       input.toString().slice(1).toLowerCase()
     );
+  }
+
+  openStoreAddDialog(): void {
+    this.storeAddDialog.open(StoreAddDialogComponent);
   }
 }

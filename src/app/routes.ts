@@ -15,14 +15,14 @@ export const navRoutes = [
     path: 'grid',
     component: GridComponent,
     canActivate: [AuthGuard],
-    title: "Grid",
+    title: "Netz",
     icon: "grid_on",
   },
   {
     path: 'stores',
     component: StoreTableComponent,
     canActivate: [AuthGuard],
-    title: "Stores",
+    title: "Speicher",
     icon: "bolt",
   },
 ];
