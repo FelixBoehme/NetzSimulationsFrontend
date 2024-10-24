@@ -1,12 +1,11 @@
 import { GridComponent } from "./grid/grid.component";
 import { AuthGuard } from "./guard/auth.guard";
-import { OverviewComponent } from "./overview/overview.component";
 import { StoreTableComponent } from "./store-table/store-table.component";
 
 export const navRoutes = [
   {
     path: 'dashboard',
-    component: OverviewComponent,
+    component: GridComponent,
     canActivate: [AuthGuard],
     title: "Dashboard",
     icon: "dashboard",

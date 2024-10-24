@@ -4,9 +4,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OverviewComponent } from './overview/overview.component';
 import { HttpClientModule } from '@angular/common/http';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -33,8 +31,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AppRoutingModule,
     BrowserModule,
     NavbarComponent,
-    SidebarComponent,
-    OverviewComponent,
     KeycloakAngularModule,
   ],
   providers: [
