@@ -14,7 +14,6 @@ import {
   Subject,
   debounceTime,
   distinctUntilChanged,
-  interval,
   map,
   merge,
   startWith,
@@ -55,6 +54,7 @@ import { StoreAddDialogComponent } from '../store-add-dialog/store-add-dialog.co
   styleUrl: './store-table.component.scss',
 })
 export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
+  @Input() pollTrigger!: Observable<number>;
   @Input({ required: true }) stores!: 'all' | 'network';
   @Input({ alias: 'disable' }) disabledColumns: String = '';
   @Input() filters: { label: String; filter: String }[] = [
@@ -78,7 +78,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   networkId: undefined | number;
   isLoading: boolean = true;
   resultsLength: number = 0;
-  isActive = new Subject<void>();
+  private destroy = new Subject<void>();
   locationControl = new FormControl('');
   chipsControl = new FormControl([]);
 
@@ -127,8 +127,8 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.isActive.next();
-    this.isActive.complete();
+    this.destroy.next();
+    this.destroy.complete();
   }
 
   ngAfterViewInit() {
@@ -145,7 +145,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
         debounceTime(300),
         distinctUntilChanged(),
       ),
-      interval(5000),
+      this.pollTrigger
     )
       .pipe(
         startWith({}),
@@ -164,7 +164,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
           this.resultsLength = data.totalCount;
           return data.stores;
         }),
-        takeUntil(this.isActive),
+        takeUntil(this.destroy),
       )
       .subscribe((data) => (this.data = data));
   }

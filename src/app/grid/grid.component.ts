@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NetworkService } from '../shared/network.service';
 import { NetworkPickerComponent } from '../network-picker/network-picker.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { interval } from 'rxjs';
+import { Observable, Subject, interval, share, takeUntil } from 'rxjs';
 import { NetworkOverviewComponent } from '../network-overview/network-overview.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +24,12 @@ import { StoreTableComponent } from '../store-table/store-table.component';
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, OnDestroy {
+  private destroy = new Subject<void>();
+  pollTrigger: Observable<number> = interval(5000).pipe(
+    takeUntil(this.destroy),
+    share()
+  )
   networksExist: undefined | boolean;
 
   constructor(
@@ -36,12 +41,18 @@ export class GridComponent implements OnInit {
       .subscribe(
         (networksExist) => (this.networksExist = networksExist ?? undefined),
       );
-
-    interval(5000).subscribe(() => this.networkService.refreshNetworks());
+    this.networkService.refreshNetworks();
   }
 
   ngOnInit(): void {
-    this.networkService.refreshNetworks();
+    this.pollTrigger.subscribe(() => {
+      this.networkService.refreshNetworks();
+    })
+  }
+
+  ngOnDestroy(): void {
+      this.destroy.next();
+      this.destroy.complete();
   }
 
   openNetworkAddDialog(): void {
