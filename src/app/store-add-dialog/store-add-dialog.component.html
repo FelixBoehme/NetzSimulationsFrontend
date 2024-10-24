@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Speicher hinzufügen</h2>
+<mat-dialog-content>
+  <form [formGroup]="storeForm" class="dialog-content">
+    <mat-form-field>
+      <mat-label>Standort</mat-label>
+      <input type="text" matInput formControlName="storeLocationControl" (keydown.enter)="storeForm.valid && addStore()">
+      @if (!storeForm.get("storeLocationControl")?.valid) {
+        <mat-error>Standort ist <strong>erforderlich</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Typ</mat-label>
+      <mat-select formControlName="storeTypeControl">
+        @for (type of storeTypes; track type) {
+          <mat-option [value]="type.value">{{type.label}}</mat-option>
+        }
+      </mat-select>
+      @if (!storeForm.get("storeTypeControl")?.valid) {
+        <mat-error>Typ ist <strong>erforderlich</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Maximale Kapazit&auml;t</mat-label>
+      <input type="number" matInput formControlName="storeMaxCapacityControl" (keydown.enter)="storeForm.valid && addStore()">
+      @if (storeForm.get("storeMaxCapacityControl")?.getError("required")) {
+        <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
+      } @else if (storeForm.get("storeMaxCapacityControl")?.getError("min")) {
+        <mat-error>Positiver Wert <strong>erforderlich</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Aktuelle Kapazit&auml;t</mat-label>
+      <input type="number" matInput formControlName="storeCurrentCapacityControl" (keydown.enter)="storeForm.valid && addStore()">
+      @if (storeForm.get("storeCurrentCapacityControl")?.getError("required")) {
+        <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
+      } @else if (storeForm.get("storeCurrentCapacityControl")?.getError("min")) {
+        <mat-error>Positiver Wert <strong>erforderlich</strong></mat-error>
+      } @else if (storeForm.get("storeCurrentCapacityControl")?.getError("lessThanEq")) {
+        <mat-error>Wert zu <strong>gro&szlig;</strong></mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-flat-button mat-dialog-closeu [disabled]="!storeForm.valid" (click)="addStore()">Hinzuf&uuml;gen</button>
+</mat-dialog-actions>

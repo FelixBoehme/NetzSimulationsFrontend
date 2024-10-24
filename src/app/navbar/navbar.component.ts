@@ -5,12 +5,14 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 import { KeyValuePipe } from '@angular/common';
 import { navRoutes } from '../routes';
 import { KeycloakService } from 'keycloak-angular';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
     MatButtonModule,
+    MatTooltipModule,
     MatIconModule,
     RouterLink,
     RouterLinkActive,

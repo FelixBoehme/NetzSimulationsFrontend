@@ -1,14 +1,14 @@
-<h2 mat-dialog-title>Add Network</h2>
+<h2 mat-dialog-title>Netzwerk hinzuf&uuml;gen</h2>
 <mat-dialog-content>
   <mat-form-field class="dialog-content">
-    <mat-label>Networkname</mat-label>
+    <mat-label>Name des Netzes</mat-label>
     <input type="text" matInput [formControl]="networkNameControl" (keydown.enter)="networkNameControl.valid && addNetwork()">
     @if (!networkNameControl.valid) {
-    <mat-error>A network name is <strong>required</strong></mat-error>
+    <mat-error>Ein Name ist <strong>erforderlich</strong></mat-error>
     }
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-flat-button (click)="addNetwork()" [disabled]="!networkNameControl.valid" mat-dialog-close>Add</button>
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-flat-button (click)="addNetwork()" [disabled]="!networkNameControl.valid" mat-dialog-close>Hinzuf&uuml;gen</button>
 </mat-dialog-actions>

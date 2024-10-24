@@ -74,6 +74,11 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     {key:'networkId', label: "Netzwerk ID"},
   ];
   displayedColumnsKeys: (keyof Store)[] = [];
+  typeMap: Record<string, string> = {
+    "SOLAR": "Solar",
+    "WIND": "Wind",
+    "CONVENTIONAL": "Konventionell",
+  }
   data: Store[] = [];
   networkId: undefined | number;
   isLoading: boolean = true;
@@ -192,16 +197,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     return this.http.get<{ totalCount: number; stores: Store[] }>(url)
   }
 
-  toTitleCase(input: undefined | number | string): string {
-    if (input == undefined) return '';
-
-    return (
-      input.toString().charAt(0).toUpperCase() +
-      input.toString().slice(1).toLowerCase()
-    );
-  }
-
   openStoreAddDialog(): void {
-    this.storeAddDialog.open(StoreAddDialogComponent);
+    this.storeAddDialog.open(StoreAddDialogComponent, {data: this.stores === 'network' ? {networkId: this.networkId} : {}});
   }
 }
