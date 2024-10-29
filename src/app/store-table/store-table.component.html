@@ -30,10 +30,12 @@
           </button>
         </div>
         <div>
-          <button mat-flat-button class="button">
-            <mat-icon>hub</mat-icon>
-            Netzwerk
-          </button>
+          @if (this.stores === 'network') {
+            <button mat-flat-button class="button" (click)="openNetworkAddDialog()">
+              <mat-icon>hub</mat-icon>
+              Netzwerk
+            </button>
+          }
         </div>
       </div>
     </div>

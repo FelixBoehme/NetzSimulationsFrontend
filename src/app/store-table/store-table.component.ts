@@ -33,6 +33,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { StoreAddDialogComponent } from '../store-add-dialog/store-add-dialog.component';
+import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dialog.component';
 
 @Component({
   selector: 'app-store-table',
@@ -54,7 +55,7 @@ import { StoreAddDialogComponent } from '../store-add-dialog/store-add-dialog.co
   styleUrl: './store-table.component.scss',
 })
 export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
-  @Input() pollTrigger!: Observable<number>;
+  @Input() pollTrigger!: Observable<unknown>;
   @Input({ required: true }) stores!: 'all' | 'network';
   @Input({ alias: 'disable' }) disabledColumns: String = '';
   @Input() filters: { label: String; filter: String }[] = [
@@ -64,21 +65,21 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     { label: 'LEER', filter: 'currentCapacity:0' },
   ];
 
-  displayedColumns: {key: keyof Store, label: string}[] = [
-    {key:'location', label: "Standort" },
-    {key:'type', label: "Typ"},
-    {key:'currentCapacity', label: "Aktuelle Kapazität"},
-    {key:'maxCapacity', label: "Maximale Kapazität"},
-    {key:'id', label:"ID"},
-    {key:'networkName', label: "Netzwerkname"},
-    {key:'networkId', label: "Netzwerk ID"},
+  displayedColumns: { key: keyof Store; label: string }[] = [
+    { key: 'location', label: 'Standort' },
+    { key: 'type', label: 'Typ' },
+    { key: 'currentCapacity', label: 'Aktuelle Kapazität' },
+    { key: 'maxCapacity', label: 'Maximale Kapazität' },
+    { key: 'id', label: 'ID' },
+    { key: 'networkName', label: 'Netzwerkname' },
+    { key: 'networkId', label: 'Netzwerk ID' },
   ];
   displayedColumnsKeys: (keyof Store)[] = [];
   typeMap: Record<string, string> = {
-    "SOLAR": "Solar",
-    "WIND": "Wind",
-    "CONVENTIONAL": "Konventionell",
-  }
+    SOLAR: 'Solar',
+    WIND: 'Wind',
+    CONVENTIONAL: 'Konventionell',
+  };
   data: Store[] = [];
   networkId: undefined | number;
   isLoading: boolean = true;
@@ -90,21 +91,25 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private networkService: NetworkService,
-    private storeAddDialog: MatDialog,
+    private dialog: MatDialog,
   ) {
     this.networkService.getCurrentNetwork().subscribe((network) => {
       this.networkId = network!.id;
     });
   }
 
-  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    this.paginator._intl.itemsPerPageLabel="Ergebnisse pro Seite:";
-    this.paginator._intl.nextPageLabel="Nächste Seite";
-    this.paginator._intl.previousPageLabel="Vorherige Seite";
-    this.paginator._intl.getRangeLabel=(page: number, pageSize: number, length: number) => {
+    this.paginator._intl.itemsPerPageLabel = 'Ergebnisse pro Seite:';
+    this.paginator._intl.nextPageLabel = 'Nächste Seite';
+    this.paginator._intl.previousPageLabel = 'Vorherige Seite';
+    this.paginator._intl.getRangeLabel = (
+      page: number,
+      pageSize: number,
+      length: number,
+    ) => {
       if (length == 0 || pageSize == 0) {
         return `0 von ${length}`;
       }
@@ -115,7 +120,9 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
       // If the start index exceeds the list length, do not try and fix the end index to the end.
       const endIndex =
-        startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        startIndex < length
+          ? Math.min(startIndex + pageSize, length)
+          : startIndex + pageSize;
 
       return `${startIndex + 1} – ${endIndex} von ${length}`;
     };
@@ -128,7 +135,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.displayedColumns = this.displayedColumns.filter(
       (col) => !disabledColumns.includes(col.key),
     );
-    this.displayedColumnsKeys = this.displayedColumns.map(col => col.key);
+    this.displayedColumnsKeys = this.displayedColumns.map((col) => col.key);
   }
 
   ngOnDestroy(): void {
@@ -146,11 +153,8 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
         debounceTime(300),
         distinctUntilChanged(),
       ),
-      this.chipsControl.valueChanges.pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-      ),
-      this.pollTrigger
+      this.chipsControl.valueChanges,
+      this.pollTrigger,
     )
       .pipe(
         startWith({}),
@@ -182,22 +186,33 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     filterChips: string[],
     filter: string,
   ): Observable<{ totalCount: number; stores: Store[] }> {
-    let sortQuery = sort !== undefined ? `sort=${sort},${direction}` : "";
+    let sortQuery = sort !== undefined ? `sort=${sort},${direction}` : '';
 
     const filterParts = [];
     if (filterChips) filterParts.push(filterChips);
     if (filter) filterParts.push(`location:${filter}`);
 
-    const filterQuery = filterParts.length ? `&search=${filterParts.join(',')}` : '';
+    const filterQuery = filterParts.length
+      ? `&search=${filterParts.join(',')}`
+      : '';
 
     const baseUrl = environment.apiUrl;
-    const endpoint = this.stores === 'network' ? `network/${networkId}/stores` : 'energyStore/active';
+    const endpoint =
+      this.stores === 'network'
+        ? `network/${networkId}/stores`
+        : 'energyStore/active';
     const url = `${baseUrl}${endpoint}?${sortQuery}&page=${page + 1}&size=15${filterQuery}`;
 
-    return this.http.get<{ totalCount: number; stores: Store[] }>(url)
+    return this.http.get<{ totalCount: number; stores: Store[] }>(url);
   }
 
   openStoreAddDialog(): void {
-    this.storeAddDialog.open(StoreAddDialogComponent, {data: this.stores === 'network' ? {networkId: this.networkId} : {}});
+    this.dialog.open(StoreAddDialogComponent, {
+      data: this.stores === 'network' ? { networkId: this.networkId } : {},
+    });
+  }
+
+  openNetworkAddDialog(): void {
+    this.dialog.open(NetworkAddDialogComponent);
   }
 }

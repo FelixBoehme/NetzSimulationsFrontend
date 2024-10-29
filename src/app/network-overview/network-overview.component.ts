@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NetworkService } from '../shared/network.service';
 import { Network } from '../shared/network';
-import { Observable, Subject, interval, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-network-overview',
@@ -12,7 +12,7 @@ import { Observable, Subject, interval, takeUntil } from 'rxjs';
   styleUrl: './network-overview.component.scss',
 })
 export class NetworkOverviewComponent implements OnInit, OnDestroy {
-  @Input() pollTrigger!: Observable<number>;
+  @Input() pollTrigger!: Observable<unknown>;
   private destroy = new Subject<void>();
   network: undefined | Network;
 
@@ -23,15 +23,13 @@ export class NetworkOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.pollTrigger.pipe(
-      takeUntil(this.destroy)
-    ).subscribe(() => {
+    this.pollTrigger.pipe(takeUntil(this.destroy)).subscribe(() => {
       this.networkService.refreshNetwork();
     });
   }
 
   ngOnDestroy(): void {
-      this.destroy.next();
-      this.destroy.complete();
+    this.destroy.next();
+    this.destroy.complete();
   }
 }
