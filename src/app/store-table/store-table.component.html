@@ -67,7 +67,7 @@
              <button mat-icon-button class="action">
                <mat-icon>arrow_circle_up</mat-icon>
              </button>
-             <button mat-icon-button class="action">
+             <button mat-icon-button class="action" (click)="openEditDialog(row)">
                <mat-icon>edit</mat-icon>
              </button>
              <button mat-icon-button class="action" (click)="openRemoveFromNetworkDialog(row['id'])">

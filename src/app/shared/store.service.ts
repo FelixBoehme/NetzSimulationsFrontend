@@ -41,6 +41,33 @@ export class StoreService {
       });
   }
 
+  editStore(
+    storeID: number,
+    location: string,
+    type: Store['type'],
+    maxCapacity: number,
+    currentCapacity: number,
+  ): void {
+    let addUrl = `${this.url}/${storeID}`;
+    this.http
+      .put<Store>(
+        addUrl,
+        {
+          location: location,
+          type: type,
+          maxCapacity: maxCapacity,
+          currentCapacity: currentCapacity,
+        },
+        { observe: 'response' },
+      )
+      .pipe(timeout(5000))
+      .subscribe((resp) => {
+        if (resp.status === 200) {
+          this.storeChange.next();
+        }
+      });
+  }
+
   deleteStoreFromNetwork(networkID: number, storeID: number): void {
     this.http
       .delete(

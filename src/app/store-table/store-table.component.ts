@@ -220,6 +220,10 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dialog.open(NetworkAddDialogComponent);
   }
 
+  openEditDialog(store: Store): void {
+    this.dialog.open(StoreAddDialogComponent, {data: {store}})
+  }
+
   openRemoveFromNetworkDialog(storeID: number): void {
     this.dialog.open(ConfirmDialogComponent, {
       data: {
