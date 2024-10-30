@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable, Subject, timeout } from 'rxjs';
 })
 export class StoreService {
   private url = environment.apiUrl + 'energyStore';
-  private networkCreated: Subject<void> = new Subject<void>();
+  private storeChange: Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient) {}
 
@@ -36,12 +36,35 @@ export class StoreService {
       .pipe(timeout(5000))
       .subscribe((resp) => {
         if (resp.status === 200) {
-          this.networkCreated.next();
+          this.storeChange.next();
         }
       });
   }
 
-  onStoreCreated(): Observable<void> {
-    return this.networkCreated.asObservable();
+  deleteStoreFromNetwork(networkID: number, storeID: number): void {
+    this.http
+      .delete(
+        `${environment.apiUrl}network/${networkID}/energyStore/${storeID}`,
+        { observe: 'response' },
+      )
+      .subscribe((resp) => {
+        if (resp.status === 200) {
+          this.storeChange.next();
+        }
+      });
+  }
+
+  deleteStore(storeID: number): void {
+    this.http
+      .delete(`${this.url}/${storeID}`, { observe: 'response' })
+      .subscribe((resp) => {
+        if (resp.status === 200) {
+          this.storeChange.next();
+        }
+      });
+  }
+
+  onStoreChange(): Observable<void> {
+    return this.storeChange.asObservable();
   }
 }

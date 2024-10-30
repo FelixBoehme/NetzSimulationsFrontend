@@ -29,7 +29,7 @@ export class GridComponent implements OnInit, OnDestroy {
   private destroy = new Subject<void>();
   pollTrigger: Observable<unknown> = merge(
     interval(5000),
-    this.storeService.onStoreCreated(),
+    this.storeService.onStoreChange(),
     this.networkService.getCurrentNetwork().pipe(
         debounceTime(1),
         distinctUntilChanged((prev, curr) => {

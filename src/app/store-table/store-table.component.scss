@@ -123,6 +123,7 @@ $padding: 30px;
   font-weight: 500;
   padding: 1rem;
   white-space: pre;
+  text-align: center;
 }
 
 .mat-mdc-cell {
@@ -130,4 +131,8 @@ $padding: 30px;
   font-family: mat.get-theme-typography($theme, headline-small, font-family);
   font-size: mat.get-theme-typography($theme, headline-small, font-size);
   font-weight: 500;
+}
+
+.action {
+  transform: scale(1.1);
 }

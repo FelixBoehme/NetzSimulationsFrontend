@@ -34,6 +34,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { StoreAddDialogComponent } from '../store-add-dialog/store-add-dialog.component';
 import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { StoreService } from '../shared/store.service';
 
 @Component({
   selector: 'app-store-table',
@@ -65,7 +67,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     { label: 'LEER', filter: 'currentCapacity:0' },
   ];
 
-  displayedColumns: { key: keyof Store; label: string }[] = [
+  displayedColumns: { key: keyof Store | 'actions'; label: string }[] = [
     { key: 'location', label: 'Standort' },
     { key: 'type', label: 'Typ' },
     { key: 'currentCapacity', label: 'Aktuelle Kapazität' },
@@ -73,8 +75,9 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     { key: 'id', label: 'ID' },
     { key: 'networkName', label: 'Netzwerkname' },
     { key: 'networkId', label: 'Netzwerk ID' },
+    { key: 'actions', label: 'Aktion' },
   ];
-  displayedColumnsKeys: (keyof Store)[] = [];
+  displayedColumnsKeys: (keyof Store | 'actions')[] = [];
   typeMap: Record<string, string> = {
     SOLAR: 'Solar',
     WIND: 'Wind',
@@ -91,6 +94,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private networkService: NetworkService,
+    private storeService: StoreService,
     private dialog: MatDialog,
   ) {
     this.networkService.getCurrentNetwork().subscribe((network) => {
@@ -214,5 +218,31 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
   openNetworkAddDialog(): void {
     this.dialog.open(NetworkAddDialogComponent);
+  }
+
+  openRemoveFromNetworkDialog(storeID: number): void {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Speicher aus Netz entfernen',
+        message: `Soll der Speicher mit der ID ${storeID} wirklich aus dem Netz entfernt werden?`,
+        action: 'Löschen',
+        function: () => {
+          this.storeService.deleteStoreFromNetwork(this.networkId!, storeID);
+        },
+      },
+    });
+  }
+
+  openDeleteDialog(storeID: number): void {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Speicher löschen',
+        message: `Soll der Speicher mit der ID ${storeID} wirklich gelöscht werden?`,
+        action: 'Löschen',
+        function: () => {
+          this.storeService.deleteStore(storeID);
+        },
+      },
+    });
   }
 }

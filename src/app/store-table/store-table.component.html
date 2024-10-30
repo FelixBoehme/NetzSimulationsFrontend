@@ -54,11 +54,30 @@
       <div class="store-table-content" [style.min-height.px]="resultsLength === 0 ? 250 : 0">
         <table mat-table [dataSource]="data" matSort matSortDirection="asc">
           @for(column of displayedColumns; track column) {
-          <ng-container [matColumnDef]="column.key">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column.label}}</th>
-            <td mat-cell *matCellDef="let row">{{column.key === "type" ? typeMap[row[column.key]] : row[column.key]}}</td>
-          </ng-container>
+            @if (column.key !== 'actions') {
+              <ng-container [matColumnDef]="column.key">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column.label}}</th>
+                <td mat-cell *matCellDef="let row">{{column.key === "type" ? typeMap[row[column.key]] : row[column.key]}}</td>
+                </ng-container>
+            }
           }
+         <ng-container matColumnDef="actions">
+           <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+           <td mat-cell *matCellDef="let row">
+             <button mat-icon-button class="action">
+               <mat-icon>arrow_circle_up</mat-icon>
+             </button>
+             <button mat-icon-button class="action">
+               <mat-icon>edit</mat-icon>
+             </button>
+             <button mat-icon-button class="action" (click)="openRemoveFromNetworkDialog(row['id'])">
+               <mat-icon>close</mat-icon>
+             </button>
+             <button mat-icon-button class="action" (click)="openDeleteDialog(row['id'])">
+               <mat-icon>delete</mat-icon>
+             </button>
+           </td>
+         </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumnsKeys; sticky:true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumnsKeys;"></tr>
