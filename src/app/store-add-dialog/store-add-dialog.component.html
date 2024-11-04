@@ -1,4 +1,10 @@
-<h2 mat-dialog-title>Speicher hinzufügen</h2>
+  <h2 mat-dialog-title>
+  @if (mode === "edit") {
+    Speicher bearbeiten
+  } @else {
+    Speicher hinzuf&uuml;gen
+  }
+  </h2>
 <mat-dialog-content>
   <form [formGroup]="storeForm" class="dialog-content">
     <mat-form-field>

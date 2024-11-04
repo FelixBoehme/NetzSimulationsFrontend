@@ -91,6 +91,20 @@ export class StoreService {
       });
   }
 
+  fillStore(storeID: number, fillAmount: number): void {
+    this.http
+      .put(
+        `${this.url}/${storeID}/capacity/${fillAmount}`,
+        {},
+        { observe: 'response' },
+      )
+      .subscribe((resp) => {
+        if (resp.status === 200) {
+          this.storeChange.next();
+        }
+      });
+  }
+
   onStoreChange(): Observable<void> {
     return this.storeChange.asObservable();
   }

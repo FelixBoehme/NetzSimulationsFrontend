@@ -36,6 +36,7 @@ import { StoreAddDialogComponent } from '../store-add-dialog/store-add-dialog.co
 import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { StoreService } from '../shared/store.service';
+import { StoreFillDialogComponent } from '../store-fill-dialog/store-fill-dialog.component';
 
 @Component({
   selector: 'app-store-table',
@@ -220,8 +221,14 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dialog.open(NetworkAddDialogComponent);
   }
 
+  openFillDialog(storeID: number, maxCapacity: number, currentCapacity: number): void {
+    this.dialog.open(StoreFillDialogComponent, {
+      data: { storeID: storeID, maxCapacity: maxCapacity, currentCapacity: currentCapacity },
+    });
+  }
+
   openEditDialog(store: Store): void {
-    this.dialog.open(StoreAddDialogComponent, {data: {store}})
+    this.dialog.open(StoreAddDialogComponent, { data: { store } });
   }
 
   openRemoveFromNetworkDialog(storeID: number): void {
