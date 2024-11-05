@@ -37,6 +37,7 @@ import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dia
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { StoreService } from '../shared/store.service';
 import { StoreFillDialogComponent } from '../store-fill-dialog/store-fill-dialog.component';
+import { NetworkDrawDialogComponent } from '../network-draw-dialog/network-draw-dialog.component';
 
 @Component({
   selector: 'app-store-table',
@@ -86,6 +87,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   };
   data: Store[] = [];
   networkId: undefined | number;
+  networkCurrentCapacity: undefined | number;
   isLoading: boolean = true;
   resultsLength: number = 0;
   private destroy = new Subject<void>();
@@ -100,6 +102,7 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
   ) {
     this.networkService.getCurrentNetwork().subscribe((network) => {
       this.networkId = network!.id;
+      this.networkCurrentCapacity = network!.currentCapacity;
     });
   }
 
@@ -211,6 +214,15 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     return this.http.get<{ totalCount: number; stores: Store[] }>(url);
   }
 
+  openNetworkDrawDialog(): void {
+    this.dialog.open(NetworkDrawDialogComponent, {
+      data: {
+        networkID: this.networkId,
+        currentCapacity: this.networkCurrentCapacity,
+      },
+    });
+  }
+
   openStoreAddDialog(): void {
     this.dialog.open(StoreAddDialogComponent, {
       data: this.stores === 'network' ? { networkId: this.networkId } : {},
@@ -221,9 +233,17 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dialog.open(NetworkAddDialogComponent);
   }
 
-  openFillDialog(storeID: number, maxCapacity: number, currentCapacity: number): void {
+  openFillDialog(
+    storeID: number,
+    maxCapacity: number,
+    currentCapacity: number,
+  ): void {
     this.dialog.open(StoreFillDialogComponent, {
-      data: { storeID: storeID, maxCapacity: maxCapacity, currentCapacity: currentCapacity },
+      data: {
+        storeID: storeID,
+        maxCapacity: maxCapacity,
+        currentCapacity: currentCapacity,
+      },
     });
   }
 

@@ -3,11 +3,11 @@
   <mat-form-field class="dialog-content">
     <mat-label>Auff&uuml;llen um</mat-label>
     <input type="number" matInput [formControl]="fillControl" (keydown.enter)="fillControl.valid && fillStore()">
-    <mat-hint>1 bis {{this.data.maxCapacity - this.data.currentCapacity}}</mat-hint>
+    <mat-hint>0,01 bis {{this.data.maxCapacity - this.data.currentCapacity}}</mat-hint>
     @if (fillControl.getError("required")) {
       <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
     } @else if (fillControl.getError("min")) {
-      <mat-error>Positiver Wert <strong>erforderlich</strong></mat-error>
+      <mat-error>Wert zu <strong>klein</strong></mat-error>
     } @else {
       <mat-error>Wert zu <strong>groß</strong></mat-error>
     }

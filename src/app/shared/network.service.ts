@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Network } from './network';
-import { BehaviorSubject, Observable, timeout } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, timeout } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,7 @@ export class NetworkService {
   >([]);
   private networksExist: BehaviorSubject<undefined | boolean> =
     new BehaviorSubject<undefined | boolean>(undefined);
+  private networkChange: Subject<void> = new Subject<void>();
 
   constructor(
     private http: HttpClient,
@@ -57,7 +58,10 @@ export class NetworkService {
           this.allNetworks.next(networks);
           this.networksExist.next(networks.length > 0);
 
-          if (this.currentNetwork.value === undefined || networks.length === 0) {
+          if (
+            this.currentNetwork.value === undefined ||
+            networks.length === 0
+          ) {
             this.setCurrentNetwork(networks[0] ?? undefined);
           }
         },
@@ -93,6 +97,20 @@ export class NetworkService {
       });
   }
 
+  drawFromNetwork(networkID: number, amount: number): void {
+    this.http
+      .put(
+        `${this.url}${networkID}/capacity/${amount}`,
+        {},
+        { observe: 'response' },
+      )
+      .subscribe((resp) => {
+        if (resp.status === 200) {
+          this.networkChange.next();
+        }
+      });
+  }
+
   getCurrentNetwork(): Observable<undefined | Network> {
     return this.currentNetwork.asObservable();
   }
@@ -107,5 +125,9 @@ export class NetworkService {
 
   getNetworksExist(): Observable<undefined | boolean> {
     return this.networksExist.asObservable();
+  }
+
+  onNetworkChange(): Observable<void> {
+    return this.networkChange.asObservable();
   }
 }

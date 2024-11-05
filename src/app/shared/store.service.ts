@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Store } from './store';
-import { BehaviorSubject, Observable, Subject, timeout } from 'rxjs';
+import { Observable, Subject, timeout } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

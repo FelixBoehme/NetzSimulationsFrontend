@@ -2,7 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NetworkService } from '../shared/network.service';
 import { NetworkPickerComponent } from '../network-picker/network-picker.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Observable, Subject, debounceTime, distinctUntilChanged, interval, merge, share, takeUntil } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+  interval,
+  merge,
+  share,
+  takeUntil,
+} from 'rxjs';
 import { NetworkOverviewComponent } from '../network-overview/network-overview.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,11 +40,12 @@ export class GridComponent implements OnInit, OnDestroy {
     interval(5000),
     this.storeService.onStoreChange(),
     this.networkService.getCurrentNetwork().pipe(
-        debounceTime(1),
-        distinctUntilChanged((prev, curr) => {
-          return prev?.id === curr?.id;
-        }),
-      ),
+      debounceTime(1),
+      distinctUntilChanged((prev, curr) => {
+        return prev?.id === curr?.id;
+      }),
+    ),
+    this.networkService.onNetworkChange(),
   ).pipe(takeUntil(this.destroy), share());
   networksExist: undefined | boolean;
 

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Kapazität beziehen</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Kapazität</mat-label>
+    <input type="number" matInput [formControl]="drawControl" (keydown.enter)="drawControl.valid && drawStore()">
+    <mat-hint>0,01 bis {{this.data!.currentCapacity}}</mat-hint>
+    @if (drawControl.getError("required")) {
+      <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
+   } @else if (drawControl.getError("min")) {
+      <mat-error>Wert zu <strong>klein</strong></mat-error>
+   } @else {
+      <mat-error>Wert zu <strong>groß</strong></mat-error>
+   }
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-flat-button (click)="drawStore()" [disabled]="!drawControl.valid" mat-dialog-close>Beziehen</button>
+</mat-dialog-actions>

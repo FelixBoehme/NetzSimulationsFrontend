@@ -11,8 +11,8 @@
     </div>
   </div>
   <div class="capacity-progress-container">
-    <mat-progress-spinner class="capacity-progress" [value]="network!.percentageCapacity === 1 ? 100 : (network!.percentageCapacity * 100) - 5" diameter=150 strokeWidth=10></mat-progress-spinner>
-    <mat-progress-spinner class="capacity-inverse-progress" [value]="network!.percentageCapacity === 0 ? 100 : (100 - network!.percentageCapacity * 100) - 5" diameter=150 strokeWidth=10></mat-progress-spinner>
+    <mat-progress-spinner class="capacity-progress" [value]="network!.percentageCapacity === 1 ? 100 : (network!.percentageCapacity * 100)" diameter=150 strokeWidth=10></mat-progress-spinner>
+    <mat-progress-spinner class="capacity-inverse-progress" [value]="100" diameter=150 strokeWidth=10></mat-progress-spinner>
     <span class="capacity-percentage">{{( network!.percentageCapacity * 100 ).toFixed(1)}}%</span>
   </div>
 </div>

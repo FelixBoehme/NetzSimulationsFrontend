@@ -40,11 +40,12 @@ $padding: 30px;
 }
 
 .store-table-filter {
-  height: 65%;
+  height: 45%;
+  gap: 1.25rem;
 }
 
 .store-table-add {
-  height: 35%;
+  height: 55%;
 
   .button-container {
     height: 100%;
@@ -52,10 +53,9 @@ $padding: 30px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
 
     .button {
-      background-color: mat.get-theme-color($theme, on-surface-variant);
       font-size: mat.get-theme-typography($theme, body-large, font-size);
       padding: mat.get-theme-typography($theme, body-large, font-size) * 1.5;
 

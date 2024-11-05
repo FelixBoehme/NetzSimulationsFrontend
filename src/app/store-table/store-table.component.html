@@ -21,22 +21,22 @@
       </div>
     </div>
     <div class="store-table-add">
-      <span class="title">Hinzuf&uuml;gen</span>
+      <span class="title">Aktionen</span>
       <div class="button-container">
-        <div>
-          <button mat-flat-button class="button" (click)="openStoreAddDialog()">
-            <mat-icon>bolt</mat-icon>
-            Speicher
+      <button mat-flat-button class="button" (click)="openNetworkDrawDialog()" [disabled]="!networkCurrentCapacity">
+        <mat-icon>arrow_circle_down</mat-icon>
+        Kapazit&auml;t beziehen
+      </button>
+        <button mat-flat-button class="button" (click)="openStoreAddDialog()">
+          <mat-icon>bolt</mat-icon>
+          Speicher hinzuf&uuml;gen
+        </button>
+        @if (this.stores === 'network') {
+          <button mat-flat-button class="button" (click)="openNetworkAddDialog()">
+            <mat-icon>hub</mat-icon>
+            Netzwerk hinzuf&uuml;gen
           </button>
-        </div>
-        <div>
-          @if (this.stores === 'network') {
-            <button mat-flat-button class="button" (click)="openNetworkAddDialog()">
-              <mat-icon>hub</mat-icon>
-              Netzwerk
-            </button>
-          }
-        </div>
+        }
       </div>
     </div>
   </div>

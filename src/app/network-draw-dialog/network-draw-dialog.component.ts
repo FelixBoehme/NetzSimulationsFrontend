@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   FormControl,
   FormsModule,
@@ -13,10 +13,10 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { StoreService } from '../shared/store.service';
+import { NetworkService } from '../shared/network.service';
 
 @Component({
-  selector: 'app-store-fill-dialog',
+  selector: 'app-network-draw-dialog',
   standalone: true,
   imports: [
     MatDialogModule,
@@ -26,29 +26,28 @@ import { StoreService } from '../shared/store.service';
     FormsModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './store-fill-dialog.component.html',
-  styleUrl: './store-fill-dialog.component.scss',
+  templateUrl: './network-draw-dialog.component.html',
+  styleUrl: './network-draw-dialog.component.scss',
 })
-export class StoreFillDialogComponent {
+export class NetworkDrawDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      storeID: number;
-      maxCapacity: number;
+      networkID: number,
       currentCapacity: number;
     },
-    private storeService: StoreService,
-    private dialogRef: MatDialogRef<StoreFillDialogComponent>,
+    private networkService: NetworkService,
+    private dialogRef: MatDialogRef<NetworkDrawDialogComponent>,
   ) {}
 
-  fillControl = new FormControl(0, [
+  drawControl = new FormControl(0, [
     Validators.required,
     Validators.min(0.01),
-    Validators.max(this.data!.maxCapacity - this.data!.currentCapacity),
+    Validators.max(this.data!.currentCapacity),
   ]);
 
-  fillStore(): void {
-    this.dialogRef.close()
-    this.storeService.fillStore(this.data.storeID, this.fillControl.value!);
+  drawStore(): void {
+    this.dialogRef.close();
+    this.networkService.drawFromNetwork(this.data.networkID, this.drawControl.value!);
   }
 }
