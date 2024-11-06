@@ -225,7 +225,9 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
   openStoreAddDialog(): void {
     this.dialog.open(StoreAddDialogComponent, {
-      data: this.stores === 'network' ? { networkId: this.networkId } : {},
+      data: {
+        networkId: this.stores === 'network' ? this.networkId : undefined,
+      },
     });
   }
 

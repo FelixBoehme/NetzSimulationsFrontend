@@ -7,7 +7,7 @@ $padding: 30px;
 .store-table-container {
   display: flex;
   height: calc(100% - $padding);
-  padding: 0 $padding $padding $padding ;
+  padding: $padding ;
 }
 
 .store-table-sidebar {

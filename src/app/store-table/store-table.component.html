@@ -1,6 +1,6 @@
-<div class="store-table-container">
+<div class="store-table-container" [style.padding-top.px]="stores === 'network' && 0">
   <div class="store-table-sidebar">
-    <div class="store-table-filter">
+    <div class="store-table-filter" [style.height.%]="stores === 'network' ? 45 : 25">
       <span class="title">Filter</span>
       <div class="search">
         <mat-form-field appearance="outline" class="shrinking-mat-form-field">
@@ -20,23 +20,23 @@
         </mat-chip-listbox>
       </div>
     </div>
-    <div class="store-table-add">
+    <div class="store-table-add" [style.height.%]="stores === 'network' ? 45 : 25">
       <span class="title">Aktionen</span>
       <div class="button-container">
-      <button mat-flat-button class="button" (click)="openNetworkDrawDialog()" [disabled]="!networkCurrentCapacity">
-        <mat-icon>arrow_circle_down</mat-icon>
-        Kapazit&auml;t beziehen
-      </button>
+      @if (this.stores === 'network') {
+        <button mat-flat-button class="button" (click)="openNetworkDrawDialog()" [disabled]="!networkCurrentCapacity">
+          <mat-icon>arrow_circle_down</mat-icon>
+          Kapazit&auml;t beziehen
+        </button>
+      }
         <button mat-flat-button class="button" (click)="openStoreAddDialog()">
           <mat-icon>bolt</mat-icon>
           Speicher hinzuf&uuml;gen
         </button>
-        @if (this.stores === 'network') {
-          <button mat-flat-button class="button" (click)="openNetworkAddDialog()">
-            <mat-icon>hub</mat-icon>
-            Netzwerk hinzuf&uuml;gen
-          </button>
-        }
+        <button mat-flat-button class="button" (click)="openNetworkAddDialog()">
+        <mat-icon>hub</mat-icon>
+        Netzwerk hinzuf&uuml;gen
+        </button>
       </div>
     </div>
   </div>

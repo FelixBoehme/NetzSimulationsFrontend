@@ -35,7 +35,7 @@ export class StoreService {
       )
       .pipe(timeout(5000))
       .subscribe((resp) => {
-        if (resp.status === 200) {
+        if (resp.status === 201) {
           this.storeChange.next();
         }
       });
