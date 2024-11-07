@@ -59,7 +59,6 @@ export class GridComponent implements OnInit, OnDestroy {
       .subscribe(
         (networksExist) => (this.networksExist = networksExist ?? undefined),
       );
-    this.networkService.refreshNetworks();
   }
 
   ngOnInit(): void {
