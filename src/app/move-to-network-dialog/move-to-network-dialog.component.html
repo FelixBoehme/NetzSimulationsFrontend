@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Netzwerk zuweisen</h2>
+<mat-dialog-content class="dialog-content">
+  <mat-form-field>
+    <mat-select [(ngModel)]="selectedNetworkID" name="network">
+      @for (network of networks; track network.id) {
+      <mat-option [value]="network.id">{{network.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-flat-button (click)="moveToNetwork()" [disabled]="!selectedNetworkID" mat-dialog-close>Zuweisen</button>
+</mat-dialog-actions>

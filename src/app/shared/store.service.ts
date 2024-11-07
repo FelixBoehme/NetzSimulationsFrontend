@@ -68,19 +68,6 @@ export class StoreService {
       });
   }
 
-  deleteStoreFromNetwork(networkID: number, storeID: number): void {
-    this.http
-      .delete(
-        `${environment.apiUrl}network/${networkID}/energyStore/${storeID}`,
-        { observe: 'response' },
-      )
-      .subscribe((resp) => {
-        if (resp.status === 200) {
-          this.storeChange.next();
-        }
-      });
-  }
-
   deleteStore(storeID: number): void {
     this.http
       .delete(`${this.url}/${storeID}`, { observe: 'response' })

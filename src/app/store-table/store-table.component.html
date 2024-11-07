@@ -70,9 +70,15 @@
              <button mat-icon-button class="action" (click)="openEditDialog(row)">
                <mat-icon>edit</mat-icon>
              </button>
-             <button mat-icon-button class="action" (click)="openRemoveFromNetworkDialog(row['id'])">
-               <mat-icon>close</mat-icon>
-             </button>
+             @if (row['networkId'] !== null) {
+               <button mat-icon-button class="action" (click)="openRemoveFromNetworkDialog(row['id'])">
+                 <mat-icon>close</mat-icon>
+                </button>
+             } @else {
+               <button mat-icon-button class="action" (click)="openMoveToNetworkDialog(row['id'])">
+                 <mat-icon>swap_horiz</mat-icon>
+                </button>
+             }
              <button mat-icon-button class="action" (click)="openDeleteDialog(row['id'])">
                <mat-icon>delete</mat-icon>
              </button>

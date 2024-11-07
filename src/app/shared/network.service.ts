@@ -26,7 +26,6 @@ export class NetworkService {
     this.refreshNetworks();
   }
 
-  //TODO: maybe switch to pipe, switchMap, map flow
   addNetwork(networkName: string): void {
     this.http
       .post<Network>(environment.apiUrl + 'network', { name: networkName })
@@ -101,6 +100,33 @@ export class NetworkService {
     this.http
       .put(
         `${this.url}${networkID}/capacity/${amount}`,
+        {},
+        { observe: 'response' },
+      )
+      .subscribe((resp) => {
+        if (resp.status === 200) {
+          this.networkChange.next();
+        }
+      });
+  }
+
+  deleteStoreFromNetwork(networkID: number, storeID: number): void {
+    this.http
+      .delete(
+        `${this.url}${networkID}/energyStore/${storeID}`,
+        { observe: 'response' },
+      )
+      .subscribe((resp) => {
+        if (resp.status === 200) {
+          this.networkChange.next();
+        }
+      });
+  }
+
+  moveToNetwork(storeID: number, networkID: number) {
+    this.http
+      .put(
+        `${this.url}${networkID}/energyStore/${storeID}`,
         {},
         { observe: 'response' },
       )

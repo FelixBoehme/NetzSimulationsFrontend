@@ -38,6 +38,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { StoreService } from '../shared/store.service';
 import { StoreFillDialogComponent } from '../store-fill-dialog/store-fill-dialog.component';
 import { NetworkDrawDialogComponent } from '../network-draw-dialog/network-draw-dialog.component';
+import { MoveToNetworkDialogComponent } from '../move-to-network-dialog/move-to-network-dialog.component';
 
 @Component({
   selector: 'app-store-table',
@@ -258,11 +259,17 @@ export class StoreTableComponent implements AfterViewInit, OnInit, OnDestroy {
       data: {
         title: 'Speicher aus Netz entfernen',
         message: `Soll der Speicher mit der ID ${storeID} wirklich aus dem Netz entfernt werden?`,
-        action: 'Löschen',
+        action: 'Entfernen',
         function: () => {
-          this.storeService.deleteStoreFromNetwork(this.networkId!, storeID);
+          this.networkService.deleteStoreFromNetwork(this.networkId!, storeID);
         },
       },
+    });
+  }
+
+  openMoveToNetworkDialog(storeID: number): void {
+    this.dialog.open(MoveToNetworkDialogComponent, {
+      data: { storeID: storeID },
     });
   }
 
