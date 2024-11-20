@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Network } from './network';
 import { BehaviorSubject, Observable, Subject, timeout } from 'rxjs';
+import { Store } from './store';
 
 @Injectable({
   providedIn: 'root',
@@ -94,6 +95,12 @@ export class NetworkService {
           snackBarRef.onAction().subscribe(() => this.refreshNetworks());
         },
       });
+  }
+
+  getStores(networkID: number) {
+    return this.http.get<{ totalCount: number; stores: Store[] }>(
+      `${this.url}${networkID}/stores`,
+    );
   }
 
   drawFromNetwork(networkID: number, amount: number): void {
