@@ -1,0 +1,63 @@
+@use '@angular/material' as mat;
+@import '../../theme/config.scss';
+
+:host {
+  flex: 1;
+  min-height: 0;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.overall-stats {
+  height: 50%;
+}
+
+.network {
+  height: 50%;
+  display: flex;
+}
+
+.network-stats {
+  width: 50%;
+}
+
+.network-graph-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.network-graph {
+  background: mat.get-theme-color($theme, surface-container);
+  border-radius: 28px;
+  height: calc(100% - 7.5rem);
+  width: calc(100% - 7.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.network-graph-label {
+  color: mat.get-theme-color($theme, primary);
+  font-family: mat.get-theme-typography($theme, display-large, font-family);
+  font-size: mat.get-theme-typography($theme, display-large, font-size);
+}
+
+.center {
+  height: 100%;
+  display: flex;
+  justify-content:  center;
+  align-items: center;
+
+}
+
+.empty-nodes {
+  font-family: mat.get-theme-typography($theme, display-large, font-family);
+  font-size: mat.get-theme-typography($theme, display-large, font-size);
+}

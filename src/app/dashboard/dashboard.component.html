@@ -1,0 +1,19 @@
+<div class="dashboard">
+  <!-- TODO: show different screen when there are no networks -->
+  <div class="overall-stats"></div>
+  <div class="network">
+    <div class="network-stats"></div>
+    <div class="network-graph-container">
+      <div class="network-graph">
+      <div class="network-graph-label">Netzgraph</div>
+        @if (isLoading) {
+          <div class="center">
+            <mat-spinner></mat-spinner>
+          </div>
+        } @else if (nodes.length > 0) {
+          <app-network-graph [nodes]="nodes" [links]="links"></app-network-graph>
+        }
+      </div>
+    </div>
+  </div>
+</div>

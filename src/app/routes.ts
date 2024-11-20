@@ -1,3 +1,4 @@
+import { DashboardComponent } from "./dashboard/dashboard.component";
 import { GridComponent } from "./grid/grid.component";
 import { AuthGuard } from "./guard/auth.guard";
 import { StoreOverviewComponent } from "./store-overview/store-overview.component";
@@ -5,7 +6,7 @@ import { StoreOverviewComponent } from "./store-overview/store-overview.componen
 export const navRoutes = [
   {
     path: 'dashboard',
-    component: GridComponent,
+    component: DashboardComponent,
     canActivate: [AuthGuard],
     title: "Dashboard",
     icon: "dashboard",
