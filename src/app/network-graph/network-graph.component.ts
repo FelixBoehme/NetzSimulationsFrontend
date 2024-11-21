@@ -1,7 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   D3DragEvent,
   Selection,
+  Simulation,
   drag,
   forceCenter,
   forceCollide,
@@ -24,17 +31,30 @@ import { SimLink } from './link';
   templateUrl: './network-graph.component.html',
   styleUrl: './network-graph.component.scss',
 })
-export class NetworkGraphComponent implements OnInit {
+export class NetworkGraphComponent implements OnInit, OnChanges {
   @Input() nodes!: SimNode[];
   @Input() links!: SimLink[];
+  private simulation: Simulation<SimNode, SimLink> = forceSimulation();
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['nodes'].isFirstChange()) {
+      select("#net-graph").selectChild().selectChildren().remove()
+      this.initializeSim();
+    }
+  }
 
   ngOnInit(): void {
+    this.initializeSim();
+  }
+
+  initializeSim = () => {
     const color = scaleLinear(
       [0, 50, 100],
       ['rgb(170, 0, 0)', 'rgb(245, 210, 0)', 'rgb(0, 170, 0)'],
     );
 
-    const simulation = forceSimulation<SimNode, SimLink>(this.nodes)
+    this.simulation = forceSimulation<SimNode, SimLink>()
+      .nodes(this.nodes)
       .force(
         'link',
         forceLink<SimNode, SimLink>(this.links).id((node) => node.id),
@@ -119,6 +139,28 @@ export class NetworkGraphComponent implements OnInit {
       .attr('fill', 'white')
       .attr('pointer-events', 'none');
 
+    let dragstarted = (
+      event: D3DragEvent<SVGCircleElement, SimNode, SimNode>,
+    ) => {
+      if (!event.active) this.simulation.alphaTarget(0.9).restart();
+      event.subject.fx = event.subject.x;
+      event.subject.fy = event.subject.y;
+    };
+    let dragged = (
+      event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>,
+    ) => {
+      event.subject.fx = event.x;
+      event.subject.fy = event.y;
+    };
+
+    let dragended = (
+      event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>,
+    ) => {
+      if (!event.active) this.simulation.alphaTarget(0);
+      event.subject.fx = null;
+      event.subject.fy = null;
+    };
+
     circle.call(
       drag<SVGCircleElement, SimNode>()
         .on('start', dragstarted)
@@ -126,7 +168,7 @@ export class NetworkGraphComponent implements OnInit {
         .on('end', dragended),
     );
 
-    simulation.on('tick', () => {
+    this.simulation.on('tick', () => {
       link
         .attr('x1', (l) =>
           typeof l.source !== 'number' && typeof l.source !== 'string'
@@ -151,27 +193,5 @@ export class NetworkGraphComponent implements OnInit {
 
       node.attr('transform', (node) => `translate(${node.x}, ${node.y})`);
     });
-
-    function dragstarted(
-      event: D3DragEvent<SVGCircleElement, SimNode, SimNode>,
-    ) {
-      if (!event.active) simulation.alphaTarget(0.9).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
-    }
-    function dragged(
-      event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>,
-    ) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
-    }
-
-    function dragended(
-      event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>,
-    ) {
-      if (!event.active) simulation.alphaTarget(0);
-      event.subject.fx = null;
-      event.subject.fy = null;
-    }
-  }
+  };
 }
