@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
             localLinks.push(
               ...stores.stores.map((store) => {
                 return {
-                  source: 'Stadtwerke Leipzig',
+                  source: network.name,
                   target: store.location,
                 };
               }),
