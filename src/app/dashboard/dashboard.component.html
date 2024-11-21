@@ -1,8 +1,23 @@
 <div class="dashboard">
   <!-- TODO: show different screen when there are no networks -->
-  <div class="overall-stats"></div>
+  <div class="overall-stats">
+    <div class="overall-labels">
+    <span class="overall-title-label">Allgemeine Statistiken</span>
+      <div class="stat-label">
+        <span>Anzahl Netzwerke </span>
+        <span>{{nmbOfNetworks}}</span>
+      </div>
+      <div class="stat-label">
+        <span>Durchschnittliche F&uuml;llmenge </span>
+        <span>{{networkAvgFill}}%</span>
+      </div>
+    </div>
+  </div>
   <div class="network">
-    <div class="network-stats"></div>
+    <div class="network-stats">
+      <app-network-picker></app-network-picker>
+      <app-network-overview></app-network-overview>
+    </div>
     <div class="network-graph-container">
       <div class="network-graph">
       <div class="network-graph-label">Netzgraph</div>

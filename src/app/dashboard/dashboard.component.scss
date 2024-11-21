@@ -14,6 +14,35 @@
 
 .overall-stats {
   height: 50%;
+  padding-top: 2.5%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.overall-labels {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  color: mat.get-theme-color($theme, on-surface);
+  font-family: mat.get-theme-typography($theme, body-medium, font-family);
+  font-size: mat.get-theme-typography($theme, headline-medium, font-size);
+  font-weight: 450;
+}
+
+.overall-title-label {
+  color: mat.get-theme-color($theme, primary);
+  font-family: mat.get-theme-typography($theme, display-large, font-family);
+  font-size: mat.get-theme-typography($theme, display-large, font-size);
+  padding-bottom: 2rem;
+}
+
+.stat-label {
+  width: 100%;
+  display: flex;
+  gap: 5rem;
+  justify-content: space-between;
 }
 
 .network {
@@ -23,6 +52,11 @@
 
 .network-stats {
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
 }
 
 .network-graph-container {
