@@ -87,6 +87,12 @@ export class StoreAddDialogComponent {
         maxCapacityControl.value < currentCapacityControl.value
       ) {
         currentCapacityControl.setErrors({ lessThanEq: true });
+      } else if (
+        maxCapacityControl.value !== null &&
+        currentCapacityControl.value != null &&
+        maxCapacityControl.value >= currentCapacityControl.value
+      ) {
+        currentCapacityControl.setErrors(null);
       }
       return null;
     };
