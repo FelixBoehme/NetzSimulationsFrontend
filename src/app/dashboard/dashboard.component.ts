@@ -7,6 +7,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { map } from 'rxjs';
 import { NetworkPickerComponent } from '../network-picker/network-picker.component';
 import { NetworkOverviewComponent } from '../network-overview/network-overview.component';
+import { NoNetworksFoundComponent } from '../no-networks-found/no-networks-found.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,7 @@ import { NetworkOverviewComponent } from '../network-overview/network-overview.c
     MatProgressSpinner,
     NetworkPickerComponent,
     NetworkOverviewComponent,
+    NoNetworksFoundComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -26,10 +28,17 @@ export class DashboardComponent implements OnInit {
   public nmbOfNetworks: number = 0;
   public networkAvgFill: number = 0;
   public isLoading: boolean = true;
+  public networksExist: undefined | boolean;
 
   constructor(private networkService: NetworkService) {}
 
   ngOnInit(): void {
+    this.networkService
+      .getNetworksExist()
+      .subscribe(
+        (networksExist) => (this.networksExist = networksExist ?? undefined),
+      );
+
     this.networkService.getCurrentNetwork().subscribe((network) => {
       if (network !== undefined) {
         let localNodes: SimNode[] = [];
@@ -79,7 +88,9 @@ export class DashboardComponent implements OnInit {
         (sum, network) => sum + network.percentageCapacity,
         0,
       );
-      this.networkAvgFill = Math.round((networkPercTotal / this.nmbOfNetworks) * 100);
+      this.networkAvgFill = Math.round(
+        (networkPercTotal / this.nmbOfNetworks) * 100,
+      );
     });
   }
 }

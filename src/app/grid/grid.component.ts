@@ -15,10 +15,9 @@ import {
 import { NetworkOverviewComponent } from '../network-overview/network-overview.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
-import { NetworkAddDialogComponent } from '../network-add-dialog/network-add-dialog.component';
 import { StoreTableComponent } from '../store-table/store-table.component';
 import { StoreService } from '../shared/store.service';
+import { NoNetworksFoundComponent } from '../no-networks-found/no-networks-found.component';
 
 @Component({
   selector: 'app-grid',
@@ -30,6 +29,7 @@ import { StoreService } from '../shared/store.service';
     MatProgressSpinnerModule,
     MatIconModule,
     MatButtonModule,
+    NoNetworksFoundComponent,
   ],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
@@ -52,7 +52,6 @@ export class GridComponent implements OnInit, OnDestroy {
   constructor(
     private networkService: NetworkService,
     private storeService: StoreService,
-    private dialog: MatDialog,
   ) {
     this.networkService
       .getNetworksExist()
@@ -70,9 +69,5 @@ export class GridComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy.next();
     this.destroy.complete();
-  }
-
-  openNetworkAddDialog(): void {
-    this.dialog.open(NetworkAddDialogComponent);
   }
 }
