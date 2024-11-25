@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>Speicher auff&uuml;llen</h2>
 <mat-dialog-content>
   <mat-form-field class="dialog-content">
-    <mat-label>Auff&uuml;llen um</mat-label>
+    <mat-label>Auff&uuml;llen um (MWh)</mat-label>
     <input type="number" matInput [formControl]="fillControl" (keydown.enter)="fillControl.valid && fillStore()">
-    <mat-hint>0,01 bis {{this.data.maxCapacity - this.data.currentCapacity}}</mat-hint>
+    <mat-hint>0,01 bis {{this.data.maxCapacity - this.data.currentCapacity}} MWh</mat-hint>
     @if (fillControl.getError("required")) {
       <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
     } @else if (fillControl.getError("min")) {

@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>Kapazität beziehen</h2>
 <mat-dialog-content>
   <mat-form-field>
-    <mat-label>Kapazität</mat-label>
+    <mat-label>Kapazität (in MWh)</mat-label>
     <input type="number" matInput [formControl]="drawControl" (keydown.enter)="drawControl.valid && drawStore()">
-    <mat-hint>0,01 bis {{this.data!.currentCapacity}}</mat-hint>
+    <mat-hint>0,01 bis {{this.data!.currentCapacity}} MWh</mat-hint>
     @if (drawControl.getError("required")) {
       <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
    } @else if (drawControl.getError("min")) {
