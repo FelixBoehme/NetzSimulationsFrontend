@@ -4,7 +4,7 @@ import { NetworkService } from '../shared/network.service';
 import { SimNode } from '../network-graph/node';
 import { SimLink } from '../network-graph/link';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { map } from 'rxjs';
+import { interval, map } from 'rxjs';
 import { NetworkPickerComponent } from '../network-picker/network-picker.component';
 import { NetworkOverviewComponent } from '../network-overview/network-overview.component';
 import { NoNetworksFoundComponent } from '../no-networks-found/no-networks-found.component';
@@ -33,6 +33,10 @@ export class DashboardComponent implements OnInit {
   constructor(private networkService: NetworkService) {}
 
   ngOnInit(): void {
+    interval(5000).subscribe(() => {
+      this.networkService.refreshNetworks();
+    });
+
     this.networkService
       .getNetworksExist()
       .subscribe(
