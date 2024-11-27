@@ -117,7 +117,9 @@ export class NetworkGraphComponent implements OnInit, OnChanges {
       .append('circle')
       .attr('r', (node) => Math.log(Math.max(node.r, 5)) * 10)
       .attr('fill', (node) => color(node.fill))
-      .attr('cursor', 'pointer');
+      .attr('cursor', 'pointer')
+      .attr("stroke", (node) => node.group === 0 ? "black" : "none" )
+      .attr("stroke-width", (node) => node.group === 0 ? "2" : "none" );
 
     //Node name
     node
