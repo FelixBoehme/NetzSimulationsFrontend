@@ -27,7 +27,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Maximale Kapazit&auml;t (MWh)</mat-label>
-      <input type="number" matInput formControlName="storeMaxCapacityControl" (keydown.enter)="storeForm.valid && submit()">
+      <input [lang]="localeID" type="number" matInput formControlName="storeMaxCapacityControl" (keydown.enter)="storeForm.valid && submit()">
       @if (storeForm.get("storeMaxCapacityControl")?.getError("required")) {
         <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
       } @else if (storeForm.get("storeMaxCapacityControl")?.getError("min")) {
@@ -36,7 +36,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Aktuelle Kapazit&auml;t (MWh)</mat-label>
-      <input type="number" matInput formControlName="storeCurrentCapacityControl" (keydown.enter)="storeForm.valid && submit()">
+      <input [lang]="localeID" type="number" matInput formControlName="storeCurrentCapacityControl" (keydown.enter)="storeForm.valid && submit()">
       @if (storeForm.get("storeCurrentCapacityControl")?.getError("required")) {
         <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
       } @else if (storeForm.get("storeCurrentCapacityControl")?.getError("min")) {

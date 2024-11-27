@@ -2,7 +2,7 @@
 <mat-dialog-content>
   <mat-form-field class="dialog-content">
     <mat-label>Auff&uuml;llen um (MWh)</mat-label>
-    <input type="number" matInput [formControl]="fillControl" (keydown.enter)="fillControl.valid && fillStore()">
+    <input [lang]="localeID" type="number" matInput [formControl]="fillControl" (keydown.enter)="fillControl.valid && fillStore()">
     <mat-hint>0,001 bis {{(this.data.maxCapacity - this.data.currentCapacity) | number: '1.0-3'}} MWh</mat-hint>
     @if (fillControl.getError("required")) {
       <mat-error>Wert ist <strong>erforderlich</strong></mat-error>

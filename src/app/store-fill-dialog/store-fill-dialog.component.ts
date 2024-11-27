@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, LOCALE_ID } from '@angular/core';
 import {
   FormControl,
   FormsModule,
@@ -33,6 +33,7 @@ import { CommonModule } from '@angular/common';
 })
 export class StoreFillDialogComponent {
   constructor(
+    @Inject(LOCALE_ID) public localeID: string,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       storeID: number;
@@ -50,7 +51,7 @@ export class StoreFillDialogComponent {
   ]);
 
   fillStore(): void {
-    this.dialogRef.close()
+    this.dialogRef.close();
     this.storeService.fillStore(this.data.storeID, this.fillControl.value!);
   }
 }

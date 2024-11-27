@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -45,6 +45,7 @@ export class StoreAddDialogComponent {
   mode: string = 'add';
 
   constructor(
+    @Inject(LOCALE_ID) public localeID: string,
     @Inject(MAT_DIALOG_DATA)
     public data: { networkId: number } | { store: Store } | null,
     private formBuilder: FormBuilder,
@@ -64,7 +65,7 @@ export class StoreAddDialogComponent {
       ],
       storeMaxCapacityControl: [
         'store' in data! ? data.store.maxCapacity : 0,
-        [Validators.required, Validators.min(1)],
+        [Validators.required, Validators.min(0.001)],
       ],
       storeCurrentCapacityControl: [
         'store' in data! ? data.store.currentCapacity : 0,

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
 import {
   FormControl,
   FormsModule,
@@ -33,6 +33,7 @@ import { CommonModule } from '@angular/common';
 })
 export class NetworkDrawDialogComponent {
   constructor(
+    @Inject(LOCALE_ID) public localeID: string,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       networkID: number;
