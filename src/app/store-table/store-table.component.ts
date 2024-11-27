@@ -39,11 +39,13 @@ import { StoreService } from '../shared/store.service';
 import { StoreFillDialogComponent } from '../store-fill-dialog/store-fill-dialog.component';
 import { NetworkDrawDialogComponent } from '../network-draw-dialog/network-draw-dialog.component';
 import { MoveToNetworkDialogComponent } from '../move-to-network-dialog/move-to-network-dialog.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-store-table',
   standalone: true,
   imports: [
+    CommonModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,

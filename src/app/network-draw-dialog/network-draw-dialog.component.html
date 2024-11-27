@@ -3,7 +3,7 @@
   <mat-form-field>
     <mat-label>Kapazität (in MWh)</mat-label>
     <input type="number" matInput [formControl]="drawControl" (keydown.enter)="drawControl.valid && drawStore()">
-    <mat-hint>0,01 bis {{this.data!.currentCapacity}} MWh</mat-hint>
+    <mat-hint>0,001 bis {{this.data!.currentCapacity | number: '1.0-3'}} MWh</mat-hint>
     @if (drawControl.getError("required")) {
       <mat-error>Wert ist <strong>erforderlich</strong></mat-error>
    } @else if (drawControl.getError("min")) {

@@ -14,11 +14,13 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NetworkService } from '../shared/network.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-network-draw-dialog',
   standalone: true,
   imports: [
+    CommonModule,
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -33,7 +35,7 @@ export class NetworkDrawDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      networkID: number,
+      networkID: number;
       currentCapacity: number;
     },
     private networkService: NetworkService,
@@ -42,12 +44,15 @@ export class NetworkDrawDialogComponent {
 
   drawControl = new FormControl(0, [
     Validators.required,
-    Validators.min(0.01),
+    Validators.min(0.001),
     Validators.max(this.data!.currentCapacity),
   ]);
 
   drawStore(): void {
     this.dialogRef.close();
-    this.networkService.drawFromNetwork(this.data.networkID, this.drawControl.value!);
+    this.networkService.drawFromNetwork(
+      this.data.networkID,
+      this.drawControl.value!,
+    );
   }
 }

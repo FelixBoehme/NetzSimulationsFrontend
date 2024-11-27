@@ -14,11 +14,13 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { StoreService } from '../shared/store.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-store-fill-dialog',
   standalone: true,
   imports: [
+    CommonModule,
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -43,7 +45,7 @@ export class StoreFillDialogComponent {
 
   fillControl = new FormControl(0, [
     Validators.required,
-    Validators.min(0.01),
+    Validators.min(0.001),
     Validators.max(this.data!.maxCapacity - this.data!.currentCapacity),
   ]);
 

@@ -3,16 +3,16 @@
     <span class="capacity-title">Kapazit&auml;t</span>
     <div class="capacity-label">
       <span>Aktuell </span>
-      <span>{{network!.currentCapacity}} MWh</span>
+      <span>{{network!.currentCapacity | number: '1.0-3'}} MWh</span>
     </div>
     <div class="capacity-label">
       <span>Maximal </span>
-      <span>{{network!.maxCapacity}} MWh</span>
+      <span>{{network!.maxCapacity | number: '1.0-3'}} MWh</span>
     </div>
   </div>
   <div class="capacity-progress-container">
     <mat-progress-spinner class="capacity-progress" [value]="network!.percentageCapacity === 1 ? 100 : (network!.percentageCapacity * 100)" diameter=150 strokeWidth=10></mat-progress-spinner>
     <mat-progress-spinner class="capacity-inverse-progress" [value]="100" diameter=150 strokeWidth=10></mat-progress-spinner>
-    <span class="capacity-percentage">{{( network!.percentageCapacity * 100 ).toFixed(1)}}%</span>
+    <span class="capacity-percentage">{{( network!.percentageCapacity * 100 ) | number: '1.0-1'}}%</span>
   </div>
 </div>

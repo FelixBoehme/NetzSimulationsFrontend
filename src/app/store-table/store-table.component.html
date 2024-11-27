@@ -57,8 +57,8 @@
             @if (column.key === "currentCapacity" || column.key === "maxCapacity") {
               <ng-container [matColumnDef]="column.key">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column.label}}</th>
-                <td mat-cell *matCellDef="let row">{{row[column.key]}} MWh</td>
-                </ng-container>
+                <td mat-cell *matCellDef="let row">{{+row[column.key] | number: '1.0-3'}} MWh</td>
+              </ng-container>
             }
             @else if (column.key !== 'actions') {
               <ng-container [matColumnDef]="column.key">

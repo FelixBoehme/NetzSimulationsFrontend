@@ -3,11 +3,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NetworkService } from '../shared/network.service';
 import { Network } from '../shared/network';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-network-overview',
   standalone: true,
-  imports: [MatProgressSpinnerModule],
+  imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './network-overview.component.html',
   styleUrl: './network-overview.component.scss',
 })
