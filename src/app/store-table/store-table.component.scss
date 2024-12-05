@@ -6,16 +6,15 @@ $padding: 30px;
 
 .store-table-container {
   display: flex;
-  height: calc(100% - $padding);
+  height: calc(100% - 2 * $padding);
   padding: $padding ;
 }
 
 .store-table-sidebar {
   display: flex;
   flex-direction: column;
-  width: 15%;
+  width: fit-content;
   height: 100%;
-  gap: $padding;
 
   > div {
      background: mat.get-theme-color($theme, surface-variant);
@@ -31,21 +30,18 @@ $padding: 30px;
        font-size: mat.get-theme-typography($theme, headline-large, font-size);
        font-weight: 500;
      }
-
-     > .search {
-       padding-top: 1.5rem;
-     }
   }
 
 }
 
 .store-table-filter {
-  height: 45%;
+  height: fit-content;
   gap: 1.25rem;
 }
 
 .store-table-add {
-  height: 55%;
+  margin-top: $padding;
+  height: fit-content;
 
   .button-container {
     height: 100%;
@@ -53,7 +49,8 @@ $padding: 30px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
+    margin-top: 20px;
 
     .button {
       font-size: mat.get-theme-typography($theme, body-large, font-size);

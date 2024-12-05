@@ -1,6 +1,6 @@
 <div class="store-table-container" [style.padding-top.px]="stores === 'network' && 0">
-  <div class="store-table-sidebar">
-    <div class="store-table-filter" [style.height.%]="stores === 'network' ? 45 : 25">
+  <div class="store-table-sidebar" [style.justify-content]="stores === 'network' && 'space-between'">
+    <div class="store-table-filter">
       <span class="title">Filter</span>
       <div class="search">
         <mat-form-field appearance="outline" class="shrinking-mat-form-field">
@@ -20,7 +20,7 @@
         </mat-chip-listbox>
       </div>
     </div>
-    <div class="store-table-add" [style.height.%]="stores === 'network' ? 45 : 25">
+    <div class="store-table-add">
       <span class="title">Aktionen</span>
       <div class="button-container">
       @if (this.stores === 'network') {
